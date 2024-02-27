@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="xStartColor" format="color" />
+    <attr name="xEndColor" format="color" />
+    <attr name="xCornersRadius" format="dimension" />
+    <declare-styleable name="GradientProgressView">
+        <attr name="xStartColor" />
+        <attr name="xEndColor" />
+        <attr name="xCornersRadius" />
+    </declare-styleable>
+
+    <declare-styleable name="HalfCircleProgressBar">
+        <attr name="progress" format="integer"/>
+    </declare-styleable>
+
+</resources>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textSize="32dp"
+        app:layout_constraintStart_toStartOf="@+id/progress_speed"
+        app:layout_constraintBottom_toTopOf="@+id/progress_speed"/>
+
+    <TextView
+        android:id="@+id/speed_12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="12"
+        android:textSize="32dp"
+        android:textColor="#FF2400"
+        app:layout_constraintEnd_toEndOf="@+id/progress_speed"
+        app:layout_constraintBottom_toTopOf="@+id/progress_speed"/>
+    
+    <com.example.motoengine.GradientProgressView
+        android:id="@+id/progress_speed"
+        android:layout_width="640dp"
+        android:layout_height="81dp"
+        app:xStartColor="#2196F3"
+        app:xEndColor="#FF2400"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
