@@ -19,3 +19,9 @@
 /.idea/gradle.xml
 /.idea/compiler.xml
 /.idea/deploymentTargetDropDown.xml
+/.gradle/8.0/checksums/sha1-checksums.bin
+/.gradle/8.0/checksums/md5-checksums.bin
+/.gradle/config.properties
+/.gradle/buildOutputCleanup/cache.properties
+/.idea/migrations.xml
+/.idea/.gitignore

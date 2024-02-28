@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="com.example.motoengine.DataViewModel"/>
+
+        <import type="com.example.motoengine.DataViewModel" />
+
         <variable
             name="speed"
             type="Integer" />
@@ -13,36 +15,36 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.example.motoengine.MainActivity"
-        android:background="@color/black">
+        android:background="@color/black"
+        tools:context="com.example.motoengine.MainActivity">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/moto_meter"
             android:scaleType="centerInside"
+            android:src="@mipmap/moto_meter"
             android:visibility="visible"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <!--        <ProgressBar-->
-<!--            android:id="@+id/progress_speed"-->
-<!--            android:layout_width="600dp"-->
-<!--            android:layout_height="72dp"-->
-<!--            style="@android:style/Widget.ProgressBar.Horizontal"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent"-->
-<!--            android:layout_marginTop="30dp"-->
-<!--            android:background="#535050"-->
-<!--            android:max="12000"-->
-<!--            android:progress="0"-->
-<!--            android:progressDrawable="@drawable/progress_bar_color"-->
-<!--            app:xEndColor="#FF2400"-->
-<!--            app:xStartColor="#2196F3" />-->
+        <SeekBar
+            android:id="@+id/progress_speed_1"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="432dp"
+            android:layout_height="138dp"
+            android:background="#535050"
+            android:max="12000"
+            android:progress="0"
+            android:progressDrawable="@drawable/progress_bar_color"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:xEndColor="#FF2400"
+            app:xStartColor="#2196F3" />
 
         <com.example.motoengine.ExcludeFontPaddingTextView
             android:id="@+id/tv_speed"
@@ -72,28 +74,30 @@
 
         <com.example.motoengine.GradientProgressView
             android:id="@+id/progress_speed"
-            android:layout_width="660dp"
+            android:layout_width="432dp"
             android:layout_height="138dp"
-            app:xStartColor="#2196F3"
-            app:xEndColor="#2196F3"
-            app:skewX="-8dp"
             android:progressDrawable="@drawable/progress_bar_color"
             android:thumb="@drawable/seekbar"
+            android:visibility="visible"
+            app:bottomRightCornersRadius="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:visibility="visible"/>
+            app:skewX="-8.1dp"
+            app:topLeftCornersRadius="5dp"
+            app:xEndColor="#DD2121"
+            app:xStartColor="#2196F3" />
 
         <View
             android:layout_width="660dp"
             android:layout_height="140dp"
             android:background="@mipmap/main"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:visibility="gone"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.example.motoengine.HalfCircleProgressBar
             android:id="@+id/halfCircleProgressBar"
@@ -126,7 +130,7 @@
             android:progress="0"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

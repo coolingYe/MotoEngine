@@ -65,8 +65,8 @@ class MainActivity : AppCompatActivity() {
 
         mBinding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                mBinding.progressSpeed.setProgress(mBinding.seekBar.progress.toFloat())
-                mBinding.tvSpeed.text = mBinding.seekBar.progress.toString()
+                mBinding.progressSpeed.progress = mBinding.seekBar.progress.toFloat()
+                mBinding.tvSpeed.text = (mBinding.progressSpeed.progress / 40).toInt().toString()
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -101,7 +101,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun selfTestRotatingSpeed() {
-        if (rotatingSpeed < 12000 && !hasRotatingSpeed) {
+        if (rotatingSpeed <= 5000 && !hasRotatingSpeed) {
             rotatingSpeed += 100
         } else {
             if (rotatingSpeed <= 0) {
@@ -112,6 +112,10 @@ class MainActivity : AppCompatActivity() {
             rotatingSpeed -= 100
         }
         mBinding.progressSpeed.setProgress(rotatingSpeed.toFloat())
+        mBinding.tvSpeed.text = rotatingSpeed.toString()
+        if (rotatingSpeed == 5100) {
+            Thread.sleep(2000)
+        }
     }
 
     private fun updateData(speed: Int) {

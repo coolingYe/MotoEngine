@@ -29,7 +29,7 @@ public class GradientProgressView extends View {
     private static final String TAG = "GradientProgressView";
 
     private final Paint mProgressPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private final Paint mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint mLinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     private @ColorInt
     final int mStartColor;
@@ -49,7 +49,7 @@ public class GradientProgressView extends View {
     private int mWidth;
     private int mHeight;
 
-    private int total = 12000;
+    private int total = 6000;
 
     public GradientProgressView(Context context) {
         this(context, null);
@@ -104,30 +104,35 @@ public class GradientProgressView extends View {
                 mStartColor, Shader.TileMode.REPEAT);
         mProgressPaint.setShader(shader);
         mProgressPaint.setAntiAlias(true);
-        mProgressPaint.setStrokeWidth(mHeight);
-        mProgressPaint.setStyle(Paint.Style.STROKE);
+        mProgressPaint.setStyle(Paint.Style.FILL);
         PathEffect effect = new DashPathEffect(new float[]{5, 4}, 0); //设置虚线
         mProgressPaint.setPathEffect(effect);
-        Matrix matrix = new Matrix();
-        matrix.setSkew(skewX / 180 * (float) Math.PI, 0f, 0f, 500); //倾斜变换
+
+        mLinePaint.setColor(Color.WHITE);
+        mLinePaint.setStrokeWidth(10);
 
         if (skewX != 0) {
             Path path = new Path();
-            path.moveTo(0, mHeight);
-            path.lineTo(mWidth * ratio, mHeight);
-//            path.addRoundRect(new RectF(0, 0, mWidth * ratio, mHeight),
-//                    new float[]{
-//                            topLeftRadius, topLeftRadius,
-//                            topRightRadius, topRightRadius,
-//                            bottomRightRadius, bottomRightRadius,
-//                            bottomLeftRadius, bottomLeftRadius
-//                    }, Path.Direction.CW); // 添加一个有弧度的矩形路径
-//            path.addRect(new RectF(0, 0, mWidth * ratio, mHeight),Path.Direction.CW);
+            path.addRoundRect(new RectF(0, 0, mWidth * ratio, mHeight),
+                    new float[]{
+                            topLeftRadius, topLeftRadius,
+                            topRightRadius, topRightRadius,
+                            bottomRightRadius, bottomRightRadius,
+                            bottomLeftRadius, bottomLeftRadius
+                    }, Path.Direction.CW); // 添加一个有弧度的矩形路径
+            Matrix matrix = new Matrix();
+            matrix.setSkew(skewX / 180 * (float) Math.PI, 0f, 0f, 500); //倾斜变换
             path.transform(matrix); // 将路径进行倾斜变换
             canvas.drawPath(path, mProgressPaint); // 使用画布绘制路径
+
+            canvas.drawLine(mWidth * ratio + 185, 0, mWidth * ratio + 45, mHeight, mLinePaint);
         } else {
             canvas.drawRoundRect(0, 0, mWidth * ratio, mHeight, mCornersRadius, mCornersRadius, mProgressPaint);
         }
+    }
+
+    public float getProgress() {
+        return mProgress;
     }
 
     public void setProgress(float progress) {
