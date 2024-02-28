@@ -51,16 +51,18 @@ public class HalfCircleProgressBar extends View {
         progressPaint.setAntiAlias(true);
     }
 
+    private static int padding = 18;
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        int width = getWidth();
-        int height = getHeight();
-        int diameter = Math.min(width, height);
+        int centerX = getWidth();
+        int centerY = getHeight();
+        int radius = Math.min(getWidth(), getHeight()) / 2;
 
         // 绘制背景半圆环
-        RectF rectF = new RectF(18, 18, diameter - 18, diameter - 18);
+        RectF rectF = new RectF(padding, padding, centerX - padding, centerY * 2);
 //        canvas.drawArc(rectF, 180, 180, false, backgroundPaint);
 
         // 绘制进度半圆环
@@ -71,6 +73,10 @@ public class HalfCircleProgressBar extends View {
     public void setProgress(int progress) {
         this.progress = progress;
         invalidate();
+    }
+
+    public int getProgress() {
+        return this.progress;
     }
 
     public void setMax(int max) {

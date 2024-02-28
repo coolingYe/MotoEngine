@@ -21,6 +21,7 @@
             android:layout_height="wrap_content"
             android:src="@mipmap/moto_meter"
             android:scaleType="centerInside"
+            android:visibility="visible"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -50,7 +51,6 @@
             android:layout_marginTop="23dp"
             android:layout_marginEnd="630dp"
             android:fontFamily="@font/kernel_bold_oblique"
-            android:text="@{String.valueOf(speed)}"
             android:textColor="#FFFFFF"
             android:textSize="60sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -70,22 +70,20 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ProgressBar
+        <com.example.motoengine.GradientProgressView
             android:id="@+id/progress_speed"
-            style="@android:style/Widget.ProgressBar.Horizontal"
             android:layout_width="660dp"
-            android:layout_height="wrap_content"
-            android:max="12000"
-            android:maxHeight="130dp"
-            android:minHeight="130dp"
-            android:progress="0"
+            android:layout_height="138dp"
+            app:xStartColor="#2196F3"
+            app:xEndColor="#2196F3"
+            app:skewX="-8dp"
             android:progressDrawable="@drawable/progress_bar_color"
             android:thumb="@drawable/seekbar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:visibility="gone"/>
+            android:visibility="visible"/>
 
         <View
             android:layout_width="660dp"
@@ -99,10 +97,10 @@
 
         <com.example.motoengine.HalfCircleProgressBar
             android:id="@+id/halfCircleProgressBar"
-            android:layout_width="140dp"
-            android:layout_height="138dp"
-            android:layout_marginEnd="104dp"
-            android:layout_marginBottom="82dp"
+            android:layout_width="132dp"
+            android:layout_height="66dp"
+            android:layout_marginEnd="108dp"
+            android:layout_marginBottom="154dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

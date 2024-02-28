@@ -2,20 +2,19 @@ package com.example.motoengine
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.os.Message
 import android.util.Log
 import android.view.OrientationEventListener
-import android.view.View
 import android.widget.SeekBar
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import com.example.motoengine.R
 import com.example.motoengine.databinding.ActivityMainBinding
 import kotlin.math.abs
 
@@ -24,19 +23,20 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var mBinding: ActivityMainBinding
     private lateinit var mViewModel: DataViewModel
-    private val mHandle: Handler = Handler(Looper.myLooper()!!)
+    private val mHandle: MyHandler = MyHandler(Looper.myLooper()!!)
 
-    private val mRunnableSelfTest1: Runnable = object : Runnable {
+
+    private val mRunnableSelfTest1 = object : Runnable {
         override fun run() {
             selfTestSpeed()
             mHandle.postDelayed(this, 150)
         }
     }
 
-    private val mRunnableSelfTest2: Runnable = object : Runnable {
+    private val mRunnableSelfTest2 = object : Runnable {
         override fun run() {
             selfTestRotatingSpeed()
-            mHandle.postDelayed(this, 80)
+            mHandle.postDelayed(this, 10)
         }
     }
 
@@ -52,21 +52,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
-        // 隐藏系统UI
-        // 隐藏系统UI
-        val decorView = window.decorView
-        val uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-        decorView.systemUiVisibility = uiOptions
+        val windowInsetsController =
+            WindowCompat.getInsetsController(window, window.decorView)
+        // Configure the behavior of the hidden system bars.
+        windowInsetsController.systemBarsBehavior =
+            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
 
-        // 设置全屏显示
-        supportActionBar?.hide()
+        windowInsetsController.hide(WindowInsetsCompat.Type.systemBars())
+
         mHandle.post(mRunnableSelfTest1)
         mHandle.post(mRunnableSelfTest2)
 
         mBinding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                mBinding.progressSpeed.setProgress(mBinding.seekBar.progress)
-                mBinding.speed = mBinding.seekBar.progress
+                mBinding.progressSpeed.setProgress(mBinding.seekBar.progress.toFloat())
+                mBinding.tvSpeed.text = mBinding.seekBar.progress.toString()
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -102,42 +102,61 @@ class MainActivity : AppCompatActivity() {
 
     private fun selfTestRotatingSpeed() {
         if (rotatingSpeed < 12000 && !hasRotatingSpeed) {
-            rotatingSpeed += 700
+            rotatingSpeed += 100
         } else {
             if (rotatingSpeed <= 0) {
                 rotatingSpeed = 0
                 return
             }
             hasRotatingSpeed = true
-            rotatingSpeed -= 700
+            rotatingSpeed -= 100
         }
-        mBinding.progressSpeed.setProgress(rotatingSpeed)
+        mBinding.progressSpeed.setProgress(rotatingSpeed.toFloat())
     }
 
     private fun updateData(speed: Int) {
 
     }
-
+    private val KEY_PROGRESS = "Progress"
     inner class MyOrientoinListener(context: Context) : OrientationEventListener(context) {
 
         @SuppressLint("SetTextI18n")
         override fun onOrientationChanged(orientation: Int) {
             Log.d(this@MainActivity.packageName.toString(), orientation.toString())
-            val angle = abs(orientation - 270)
-            if (angle == 271) {
-                mBinding.tvCarAngle.text = "00°"
-                mBinding.halfCircleProgressBar.setProgress(0)
-            } else {
-                mBinding.tvCarAngle.text = "$angle°"
-                var progress = orientation - 270
-                if (progress <= -90 && orientation >= 180) {
-                    progress = -90
-                } else if (orientation <= 1) {
-                    progress = 90
-                }
-                Log.d("progress", progress.toString())
-                mBinding.halfCircleProgressBar.setProgress(progress)
-            }
+            val message = Message.obtain(mHandle);
+            val bundle = Bundle()
+            bundle.putInt(KEY_PROGRESS, orientation)
+            message.data = bundle
+            mHandle.sendMessage(message)
         }
+    }
+
+    inner class MyHandler(looper: Looper) : Handler(looper) {
+        @SuppressLint("SetTextI18n")
+        override fun handleMessage(msg: Message) {
+            val angle = msg.data.getInt(KEY_PROGRESS)
+            var angleNew =  angle - 270
+            Log.d("angle----->", angle.toString())
+            Log.d("angleNew----->", angleNew.toString())
+            when {
+                angle == -1 || angle == 271 -> {
+                    angleNew = 0
+                }
+                angle == 0 || angleNew == -270 -> {
+                    angleNew = 90
+                }
+            }
+            if (angleNew !in -90..90) {
+                if (angle < 90) {
+                    angleNew = 90
+                }
+                if (angle in 91..179) {
+                    angleNew = -90
+                }
+            }
+            mBinding.halfCircleProgressBar.progress = angleNew
+            mBinding.tvCarAngle.text = abs(angleNew).toString() + "°"
+        }
+
     }
 }

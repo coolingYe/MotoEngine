@@ -4,11 +4,17 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.DashPathEffect;
 import android.graphics.LinearGradient;
+import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.PathEffect;
+import android.graphics.RectF;
 import android.graphics.Shader;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import androidx.annotation.ColorInt;
 
@@ -29,7 +35,15 @@ public class GradientProgressView extends View {
     final int mStartColor;
     private @ColorInt
     final int mEndColor;
+
+    private final float topLeftRadius;
+    private final float topRightRadius;
+    private final float bottomLeftRadius;
+    private final float bottomRightRadius;
     private final float mCornersRadius;
+
+    private float skewX = 0; // X轴上的倾斜角度
+    private float skewY = 0; // Y轴上的倾斜角度
 
     private float mProgress = -1;
     private int mWidth;
@@ -53,7 +67,13 @@ public class GradientProgressView extends View {
         mStartColor = a.getColor(R.styleable.GradientProgressView_xStartColor, Color.TRANSPARENT);
         mEndColor = a.getColor(R.styleable.GradientProgressView_xEndColor, Color.TRANSPARENT);
         mCornersRadius = a.getDimension(R.styleable.GradientProgressView_xCornersRadius, 0);
-
+        topLeftRadius = a.getDimension(R.styleable.GradientProgressView_topLeftCornersRadius, 0);
+        topRightRadius = a.getDimension(R.styleable.GradientProgressView_topRightCornersRadius, 0);
+        bottomLeftRadius = a.getDimension(R.styleable.GradientProgressView_bottomLeftCornersRadius, 0);
+        bottomRightRadius = a.getDimension(R.styleable.GradientProgressView_bottomRightCornersRadius, 0);
+        skewX = a.getDimension(R.styleable.GradientProgressView_skewX, 0);
+        skewY = a.getDimension(R.styleable.GradientProgressView_skewY, 0);
+        mProgress = a.getInt(R.styleable.GradientProgressView_progress, 0);
         a.recycle();
     }
 
@@ -78,12 +98,36 @@ public class GradientProgressView extends View {
      */
     private void drawProgress(Canvas canvas) {
 
-        float ratio = (1 - (mHeight / (float) mWidth)) * mProgress / total + (mHeight / (float) mWidth);
+        float ratio = (mProgress / total);
 
         Shader shader = new LinearGradient(0, 0, mWidth * ratio, 0, mStartColor,
                 mStartColor, Shader.TileMode.REPEAT);
         mProgressPaint.setShader(shader);
-        canvas.drawRoundRect(0, 0, mWidth * ratio, mHeight, mCornersRadius, mCornersRadius, mProgressPaint);
+        mProgressPaint.setAntiAlias(true);
+        mProgressPaint.setStrokeWidth(mHeight);
+        mProgressPaint.setStyle(Paint.Style.STROKE);
+        PathEffect effect = new DashPathEffect(new float[]{5, 4}, 0); //设置虚线
+        mProgressPaint.setPathEffect(effect);
+        Matrix matrix = new Matrix();
+        matrix.setSkew(skewX / 180 * (float) Math.PI, 0f, 0f, 500); //倾斜变换
+
+        if (skewX != 0) {
+            Path path = new Path();
+            path.moveTo(0, mHeight);
+            path.lineTo(mWidth * ratio, mHeight);
+//            path.addRoundRect(new RectF(0, 0, mWidth * ratio, mHeight),
+//                    new float[]{
+//                            topLeftRadius, topLeftRadius,
+//                            topRightRadius, topRightRadius,
+//                            bottomRightRadius, bottomRightRadius,
+//                            bottomLeftRadius, bottomLeftRadius
+//                    }, Path.Direction.CW); // 添加一个有弧度的矩形路径
+//            path.addRect(new RectF(0, 0, mWidth * ratio, mHeight),Path.Direction.CW);
+            path.transform(matrix); // 将路径进行倾斜变换
+            canvas.drawPath(path, mProgressPaint); // 使用画布绘制路径
+        } else {
+            canvas.drawRoundRect(0, 0, mWidth * ratio, mHeight, mCornersRadius, mCornersRadius, mProgressPaint);
+        }
     }
 
     public void setProgress(float progress) {
