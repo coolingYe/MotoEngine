@@ -15,19 +15,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/black"
+        android:background="#000"
         tools:context="com.example.motoengine.MainActivity">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleType="centerInside"
-            android:src="@mipmap/moto_meter"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <SeekBar
             android:id="@+id/progress_speed_1"
@@ -45,6 +34,44 @@
             app:layout_constraintTop_toTopOf="parent"
             app:xEndColor="#FF2400"
             app:xStartColor="#2196F3" />
+
+        <com.example.motoengine.GradientProgressView
+            android:id="@+id/progress_speed_line"
+            android:layout_width="650dp"
+            android:layout_height="138dp"
+            android:visibility="gone"
+            android:layout_marginStart="29dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:skewX="-8.1dp"
+            app:xEndColor="#DD2121"
+            app:xStartColor="#2196F3" />
+
+        <com.example.motoengine.LineProgressView
+            android:id="@+id/progress_speed"
+            android:layout_width="660dp"
+            android:layout_height="138dp"
+            android:visibility="visible"
+            android:layout_marginStart="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:xEndColor="#DD2121"
+            app:xStartColor="#2196F3" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerInside"
+            android:src="@mipmap/moto_meter"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.example.motoengine.ExcludeFontPaddingTextView
             android:id="@+id/tv_speed"
@@ -70,33 +97,6 @@
             android:textColor="#2196F3"
             android:textSize="60sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.example.motoengine.GradientProgressView
-            android:id="@+id/progress_speed"
-            android:layout_width="432dp"
-            android:layout_height="138dp"
-            android:progressDrawable="@drawable/progress_bar_color"
-            android:thumb="@drawable/seekbar"
-            android:visibility="visible"
-            app:bottomRightCornersRadius="5dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:skewX="-8.1dp"
-            app:topLeftCornersRadius="5dp"
-            app:xEndColor="#DD2121"
-            app:xStartColor="#2196F3" />
-
-        <View
-            android:layout_width="660dp"
-            android:layout_height="140dp"
-            android:background="@mipmap/main"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.example.motoengine.HalfCircleProgressBar

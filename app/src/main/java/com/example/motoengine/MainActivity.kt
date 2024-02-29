@@ -21,9 +21,14 @@ import kotlin.math.abs
 
 class MainActivity : AppCompatActivity() {
 
+    companion object {
+        private const val KEY_PROGRESS = "Progress"
+    }
+
     private lateinit var mBinding: ActivityMainBinding
     private lateinit var mViewModel: DataViewModel
-    private val mHandle: MyHandler = MyHandler(Looper.myLooper()!!)
+    private val mHandle: Handler = Handler(Looper.myLooper()!!)
+    private val mMyHandle: MyHandler = MyHandler(Looper.myLooper()!!)
 
 
     private val mRunnableSelfTest1 = object : Runnable {
@@ -39,7 +44,6 @@ class MainActivity : AppCompatActivity() {
             mHandle.postDelayed(this, 10)
         }
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,7 +70,8 @@ class MainActivity : AppCompatActivity() {
         mBinding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 mBinding.progressSpeed.progress = mBinding.seekBar.progress.toFloat()
-                mBinding.tvSpeed.text = (mBinding.progressSpeed.progress / 40).toInt().toString()
+                mBinding.tvSpeed.text = mBinding.progressSpeed.progress.toString()
+                //mBinding.tvSpeed.text = (mBinding.progressSpeedLine.progress / 40).toInt().toString()
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -101,27 +106,28 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun selfTestRotatingSpeed() {
-        if (rotatingSpeed <= 5000 && !hasRotatingSpeed) {
-            rotatingSpeed += 100
+        if (rotatingSpeed <= 10850 && !hasRotatingSpeed) {
+            rotatingSpeed += 50
         } else {
             if (rotatingSpeed <= 0) {
                 rotatingSpeed = 0
+                mHandle.removeCallbacksAndMessages(null)
                 return
             }
             hasRotatingSpeed = true
-            rotatingSpeed -= 100
+            rotatingSpeed -= 50
         }
-        mBinding.progressSpeed.setProgress(rotatingSpeed.toFloat())
+        mBinding.progressSpeed.progress = rotatingSpeed.toFloat()
         mBinding.tvSpeed.text = rotatingSpeed.toString()
-        if (rotatingSpeed == 5100) {
-            Thread.sleep(2000)
+        if (rotatingSpeed == 10900) {
+            Thread.sleep(1000)
         }
     }
 
     private fun updateData(speed: Int) {
 
     }
-    private val KEY_PROGRESS = "Progress"
+
     inner class MyOrientoinListener(context: Context) : OrientationEventListener(context) {
 
         @SuppressLint("SetTextI18n")
@@ -131,7 +137,7 @@ class MainActivity : AppCompatActivity() {
             val bundle = Bundle()
             bundle.putInt(KEY_PROGRESS, orientation)
             message.data = bundle
-            mHandle.sendMessage(message)
+            mMyHandle.sendMessage(message)
         }
     }
 

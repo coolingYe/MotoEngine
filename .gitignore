@@ -25,3 +25,5 @@
 /.gradle/buildOutputCleanup/cache.properties
 /.idea/migrations.xml
 /.idea/.gitignore
+/.idea/assetWizardSettings.xml
+/local.properties
