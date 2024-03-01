@@ -43,7 +43,7 @@ public class LineProgressView extends View {
     private int mWidth;
     private int mHeight;
 
-    private int total = 12000;
+    private int total = 13200;
 
     public LineProgressView(Context context) {
         this(context, null);
@@ -108,8 +108,12 @@ public class LineProgressView extends View {
         for (int i = 0; i <= mWidth * ratio; i += 12) {
             canvas.drawLine(i + 155, 0, i + 15, mHeight, mProgressPaint1);
         }
-
-        canvas.drawLine(mWidth * ratio + 155, 0, mWidth * ratio + 15, mHeight, mLinePaint);
+        float ratio1 = 7000f / total;
+        if (mProgress >= 12000) {
+            canvas.drawLine(1618 + 155, 0, 1618 + 15, mHeight, mLinePaint);
+        } else if (mProgress <= 100) {
+            canvas.drawLine(170, 0, 30, mHeight, mLinePaint);
+        } else canvas.drawLine(mWidth * ratio + 155, 0, mWidth * ratio + 15, mHeight, mLinePaint);
 
     }
 
@@ -118,8 +122,8 @@ public class LineProgressView extends View {
     }
 
     public void setProgress(float progress) {
-        if (progress < 0) {
-            mProgress = 0;
+        if (progress <= 0) {
+            mProgress = 100;
         } else if (progress > total) {
             mProgress = total;
         } else {

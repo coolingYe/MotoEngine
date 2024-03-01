@@ -47,11 +47,11 @@ public class HalfCircleProgressBar extends View {
         progressPaint = new Paint();
         progressPaint.setColor(Color.WHITE);
         progressPaint.setStyle(Paint.Style.STROKE);
-        progressPaint.setStrokeWidth(36);
+        progressPaint.setStrokeWidth(40);
         progressPaint.setAntiAlias(true);
     }
 
-    private static int padding = 18;
+    private static int padding = 20;
 
     @Override
     protected void onDraw(Canvas canvas) {
