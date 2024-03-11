@@ -1,4 +1,4 @@
-package com.example.motoengine
+package com.example.motoengine.widgets
 
 
 import android.animation.ValueAnimator
@@ -7,6 +7,7 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.LinearInterpolator
+import com.example.motoengine.R
 import kotlin.math.tan
 
 /**

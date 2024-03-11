@@ -1,4 +1,4 @@
-package com.example.motoengine;
+package com.example.motoengine.widgets;
 
 import android.content.Context;
 import android.content.res.TypedArray;

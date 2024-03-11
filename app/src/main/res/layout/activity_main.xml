@@ -35,7 +35,7 @@
             app:xEndColor="#FF2400"
             app:xStartColor="#2196F3" />
 
-        <com.example.motoengine.GradientProgressView
+        <com.example.motoengine.widgets.GradientProgressView
             android:id="@+id/progress_speed_line"
             android:layout_width="650dp"
             android:layout_height="138dp"
@@ -49,7 +49,7 @@
             app:xEndColor="#DD2121"
             app:xStartColor="#2196F3" />
 
-        <com.example.motoengine.LineProgressView
+        <com.example.motoengine.widgets.LineProgressView
             android:id="@+id/progress_speed"
             android:layout_width="678dp"
             android:layout_height="138dp"
@@ -67,209 +67,229 @@
             android:layout_height="wrap_content"
             android:scaleType="centerInside"
             android:src="@mipmap/moto_meter"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-<!--        <com.example.motoengine.ExcludeFontPaddingTextView-->
-<!--            android:id="@+id/tv_rotating_0"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="0"-->
-<!--            android:textColor="@color/white"-->
-<!--            android:textSize="30sp"-->
-<!--            android:fontFamily="@font/kernel_bold_oblique"-->
-<!--            android:layout_marginStart="16dp"-->
-<!--            android:layout_marginBottom="37dp"-->
-<!--            app:layout_constraintStart_toStartOf="@+id/progress_speed"-->
-<!--            app:layout_constraintBottom_toBottomOf="@+id/progress_speed"/>-->
+        <!--        <com.example.motoengine.ExcludeFontPaddingTextView-->
+        <!--            android:id="@+id/tv_rotating_0"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="0"-->
+        <!--            android:textColor="@color/white"-->
+        <!--            android:textSize="30sp"-->
+        <!--            android:fontFamily="@font/kernel_bold_oblique"-->
+        <!--            android:layout_marginStart="16dp"-->
+        <!--            android:layout_marginBottom="37dp"-->
+        <!--            app:layout_constraintStart_toStartOf="@+id/progress_speed"-->
+        <!--            app:layout_constraintBottom_toBottomOf="@+id/progress_speed"/>-->
 
-<!--        <com.example.motoengine.ExcludeFontPaddingTextView-->
-<!--            android:id="@+id/tv_rotating_2"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="2"-->
-<!--            android:textColor="@color/white"-->
-<!--            android:textSize="30sp"-->
-<!--            android:fontFamily="@font/kernel_bold_oblique"-->
-<!--            android:layout_marginStart="34dp"-->
-<!--            app:layout_constraintTop_toTopOf="@+id/tv_rotating_0"-->
-<!--            app:layout_constraintStart_toEndOf="@+id/tv_rotating_0"-->
-<!--            app:layout_constraintBottom_toBottomOf="@+id/tv_rotating_0"/>-->
+        <!--        <com.example.motoengine.ExcludeFontPaddingTextView-->
+        <!--            android:id="@+id/tv_rotating_2"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="2"-->
+        <!--            android:textColor="@color/white"-->
+        <!--            android:textSize="30sp"-->
+        <!--            android:fontFamily="@font/kernel_bold_oblique"-->
+        <!--            android:layout_marginStart="34dp"-->
+        <!--            app:layout_constraintTop_toTopOf="@+id/tv_rotating_0"-->
+        <!--            app:layout_constraintStart_toEndOf="@+id/tv_rotating_0"-->
+        <!--            app:layout_constraintBottom_toBottomOf="@+id/tv_rotating_0"/>-->
 
         <LinearLayout
             android:id="@+id/ll_speed"
             android:layout_width="678dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="11dp"
+            android:layout_height="170dp"
             android:layout_marginStart="80dp"
-            app:layout_constraintBottom_toTopOf="@+id/progress_speed"
-            app:layout_constraintStart_toStartOf="@+id/progress_speed"
+            android:layout_marginBottom="11dp"
+            android:gravity="center"
+            android:layout_marginEnd="55dp"
+            app:layout_constraintBottom_toBottomOf="@+id/progress_speed"
             app:layout_constraintEnd_toEndOf="@+id/progress_speed"
-            android:gravity="center">
+            app:layout_constraintStart_toStartOf="@+id/progress_speed">
 
-            <com.example.motoengine.ExcludeFontPaddingTextView
+            <com.example.motoengine.widgets.ExcludeFontPaddingTextView
                 android:id="@+id/tv_rotating_0"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
                 android:layout_weight="1"
+                android:fontFamily="@font/kernel_bold_oblique"
                 android:text="0"
                 android:textColor="@color/white"
-                android:textSize="30sp"
-                android:gravity="center"
-                android:fontFamily="@font/kernel_bold_oblique" />
+                android:layout_marginBottom="14dp"
+                android:textSize="30sp" />
 
-            <com.example.motoengine.ExcludeFontPaddingTextView
+            <com.example.motoengine.widgets.ExcludeFontPaddingTextView
                 android:id="@+id/tv_rotating_1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
                 android:layout_weight="1"
+                android:fontFamily="@font/kernel_bold_oblique"
+                android:gravity="start"
                 android:text="1"
+                android:visibility="gone"
                 android:textColor="@color/white"
-                android:textSize="30sp"
-                android:gravity="center"
-                android:fontFamily="@font/kernel_bold_oblique" />
+                android:layout_marginBottom="14dp"
+                android:textSize="30sp" />
 
-            <com.example.motoengine.ExcludeFontPaddingTextView
+            <com.example.motoengine.widgets.ExcludeFontPaddingTextView
                 android:id="@+id/tv_rotating_2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
                 android:layout_weight="1"
-                android:text="2"
-                android:textColor="@color/white"
-                android:textSize="30sp"
+                android:fontFamily="@font/kernel_bold_oblique"
                 android:gravity="center"
-                android:fontFamily="@font/kernel_bold_oblique" />
+                android:text="2"
+                android:visibility="visible"
+                android:textColor="@color/white"
+                android:layout_marginBottom="14dp"
+                android:textSize="30sp" />
 
-            <com.example.motoengine.ExcludeFontPaddingTextView
+            <com.example.motoengine.widgets.ExcludeFontPaddingTextView
                 android:id="@+id/tv_rotating_3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="top"
                 android:layout_weight="1"
-                android:text="3"
-                android:textColor="@color/white"
-                android:textSize="30sp"
+                android:fontFamily="@font/kernel_bold_oblique"
                 android:gravity="center"
-                android:fontFamily="@font/kernel_bold_oblique" />
+                android:text="3"
+                android:visibility="gone"
+                android:textColor="@color/white"
+                android:textSize="30sp" />
 
-            <com.example.motoengine.ExcludeFontPaddingTextView
+            <com.example.motoengine.widgets.ExcludeFontPaddingTextView
                 android:id="@+id/tv_rotating_4"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="top"
                 android:layout_weight="1"
-                android:text="4"
-                android:textColor="@color/white"
-                android:textSize="30sp"
+                android:fontFamily="@font/kernel_bold_oblique"
                 android:gravity="center"
-                android:fontFamily="@font/kernel_bold_oblique" />
+                android:text="4"
+                android:layout_marginStart="38dp"
+                android:textColor="@color/white"
+                android:textSize="30sp" />
 
-            <com.example.motoengine.ExcludeFontPaddingTextView
+            <com.example.motoengine.widgets.ExcludeFontPaddingTextView
                 android:id="@+id/tv_rotating_5"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="top"
                 android:layout_weight="1"
+                android:fontFamily="@font/kernel_bold_oblique"
+                android:gravity="center"
                 android:text="5"
                 android:textColor="@color/white"
-                android:textSize="30sp"
-                android:gravity="center"
-                android:fontFamily="@font/kernel_bold_oblique" />
+                android:textSize="30sp" />
 
-            <com.example.motoengine.ExcludeFontPaddingTextView
+            <com.example.motoengine.widgets.ExcludeFontPaddingTextView
                 android:id="@+id/tv_rotating_6"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="top"
                 android:layout_weight="1"
+                android:fontFamily="@font/kernel_bold_oblique"
+                android:gravity="center"
                 android:text="6"
                 android:textColor="@color/white"
-                android:textSize="30sp"
-                android:gravity="center"
-                android:fontFamily="@font/kernel_bold_oblique" />
+                android:textSize="30sp" />
 
-            <com.example.motoengine.ExcludeFontPaddingTextView
+            <com.example.motoengine.widgets.ExcludeFontPaddingTextView
                 android:id="@+id/tv_rotating_7"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="top"
                 android:layout_weight="1"
+                android:fontFamily="@font/kernel_bold_oblique"
+                android:gravity="center"
                 android:text="7"
                 android:textColor="@color/white"
-                android:textSize="30sp"
-                android:gravity="center"
-                android:fontFamily="@font/kernel_bold_oblique" />
+                android:textSize="30sp" />
 
-            <com.example.motoengine.ExcludeFontPaddingTextView
+            <com.example.motoengine.widgets.ExcludeFontPaddingTextView
                 android:id="@+id/tv_rotating_8"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="top"
                 android:layout_weight="1"
+                android:fontFamily="@font/kernel_bold_oblique"
+                android:gravity="center"
                 android:text="8"
                 android:textColor="@color/white"
-                android:textSize="30sp"
-                android:gravity="center"
-                android:fontFamily="@font/kernel_bold_oblique" />
+                android:textSize="30sp" />
 
-            <com.example.motoengine.ExcludeFontPaddingTextView
+            <com.example.motoengine.widgets.ExcludeFontPaddingTextView
                 android:id="@+id/tv_rotating_9"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="top"
                 android:layout_weight="1"
+                android:fontFamily="@font/kernel_bold_oblique"
+                android:gravity="center"
                 android:text="9"
                 android:textColor="@color/white"
-                android:textSize="30sp"
-                android:gravity="center"
-                android:fontFamily="@font/kernel_bold_oblique" />
+                android:textSize="30sp" />
 
-            <com.example.motoengine.ExcludeFontPaddingTextView
+            <com.example.motoengine.widgets.ExcludeFontPaddingTextView
                 android:id="@+id/tv_rotating_10"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="top"
                 android:layout_weight="1"
+                android:fontFamily="@font/kernel_bold_oblique"
+                android:gravity="center"
                 android:text="10"
                 android:textColor="@color/white"
-                android:textSize="30sp"
-                android:gravity="center"
-                android:fontFamily="@font/kernel_bold_oblique" />
+                android:textSize="30sp" />
 
-            <com.example.motoengine.ExcludeFontPaddingTextView
+            <com.example.motoengine.widgets.ExcludeFontPaddingTextView
                 android:id="@+id/tv_rotating_11"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="top"
                 android:layout_weight="1"
-                android:text="11"
+                android:fontFamily="@font/kernel_bold_oblique"
                 android:gravity="center"
+                android:text="11"
                 android:textColor="#ED1918"
-                android:textSize="30sp"
-                android:fontFamily="@font/kernel_bold_oblique" />
+                android:textSize="30sp" />
 
-            <com.example.motoengine.ExcludeFontPaddingTextView
+            <com.example.motoengine.widgets.ExcludeFontPaddingTextView
                 android:id="@+id/tv_rotating_12"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="top"
                 android:layout_weight="1"
-                android:text="12"
+                android:fontFamily="@font/kernel_bold_oblique"
                 android:gravity="center"
+                android:text="12"
                 android:textColor="#ED1918"
-                android:textSize="30sp"
-                android:fontFamily="@font/kernel_bold_oblique" />
+                android:textSize="30sp" />
 
         </LinearLayout>
 
-        <com.example.motoengine.ExcludeFontPaddingTextView
+        <com.example.motoengine.widgets.ExcludeFontPaddingTextView
             android:id="@+id/tv_speed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="100dp"
+            android:layout_marginEnd="-85dp"
             android:fontFamily="@font/kernel_bold_oblique"
             android:textColor="#FFFFFF"
             android:textSize="90sp"
-            android:layout_marginEnd="-85dp"
             app:layout_constraintEnd_toEndOf="@+id/tv_rotating_2"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="299"
-            tools:ignore="NotSibling" />
+            tools:ignore="NotSibling"
+            tools:text="299" />
 
-        <com.example.motoengine.ExcludeFontPaddingTextView
+        <com.example.motoengine.widgets.ExcludeFontPaddingTextView
             android:id="@+id/tv_transmission"
             android:layout_width="wrap_content"
             android:layout_height="100dp"
@@ -295,11 +315,11 @@
             android:layout_width="4dp"
             android:layout_height="15dp"
             android:background="#FFFFFF"
-            app:layout_constraintTop_toTopOf="@+id/halfCircleProgressBar"
+            app:layout_constraintEnd_toEndOf="@+id/halfCircleProgressBar"
             app:layout_constraintStart_toStartOf="@+id/halfCircleProgressBar"
-            app:layout_constraintEnd_toEndOf="@+id/halfCircleProgressBar" />
+            app:layout_constraintTop_toTopOf="@+id/halfCircleProgressBar" />
 
-        <com.example.motoengine.HalfCircleProgressBar
+        <com.example.motoengine.widgets.HalfCircleProgressBar
             android:id="@+id/halfCircleProgressBar"
             android:layout_width="140dp"
             android:layout_height="70dp"
@@ -308,7 +328,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <com.example.motoengine.ExcludeFontPaddingTextView
+        <com.example.motoengine.widgets.ExcludeFontPaddingTextView
             android:id="@+id/tv_car_angle"
             android:layout_width="60dp"
             android:layout_height="39dp"

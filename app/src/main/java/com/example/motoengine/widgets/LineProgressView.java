@@ -1,22 +1,18 @@
-package com.example.motoengine;
+package com.example.motoengine.widgets;
 
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.DashPathEffect;
 import android.graphics.LinearGradient;
-import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.PathEffect;
-import android.graphics.RectF;
 import android.graphics.Shader;
 import android.util.AttributeSet;
 import android.view.View;
 
 import androidx.annotation.ColorInt;
-import androidx.annotation.NonNull;
+
+import com.example.motoengine.R;
 
 /**
  * 1. 由于初始设置进度为0时代码控制实际绘制不为0，是一个圆形，因此高:宽不能大于一定的数值，否则看起来初始就是进度100%

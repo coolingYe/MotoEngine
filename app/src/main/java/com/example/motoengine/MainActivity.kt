@@ -17,7 +17,7 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.motoengine.databinding.ActivityMainBinding
-import java.util.ArrayList
+import com.example.motoengine.widgets.ExcludeFontPaddingTextView
 import kotlin.math.abs
 
 
@@ -49,10 +49,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private val mRunnableSpeed = object : Runnable {
-        override fun run() {
-        }
-    }
+    private val mRunnableSpeed = Runnable { }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,8 +57,8 @@ class MainActivity : AppCompatActivity() {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         mViewModel = ViewModelProvider(this)[DataViewModel::class.java]
         initViews()
-        val myOrientoinListener = MyOrientoinListener(this)
-        myOrientoinListener.enable()
+        val mOrientoinListener = MyOrientoinListener(this)
+        mOrientoinListener.enable()
     }
 
     private fun initViews() {
@@ -116,65 +113,20 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun setRotatingSpeed(progress: Int) {
-        when {
-            progress in 0..999 -> {
-                CommonUtils.scaleView(mBinding.tvRotating0, 1.5f)
-            }
-
-            progress in 1000..1999 -> {
-                CommonUtils.scaleView(mBinding.tvRotating1, 1.5f)
-            }
-
-            progress in 2000..2999 -> {
-                CommonUtils.scaleView(mBinding.tvRotating2, 1.5f)
-            }
-
-            progress in 3000..3999 -> {
-                CommonUtils.scaleView(mBinding.tvRotating3, 1.5f)
-            }
-
-            progress in 4000..4999 -> {
-                CommonUtils.scaleView(mBinding.tvRotating4, 1.5f)
-            }
-
-            progress in 5000..5999 -> {
-                CommonUtils.scaleView(mBinding.tvRotating5, 1.5f)
-            }
-
-            progress in 6000..6999 -> {
-                CommonUtils.scaleView(mBinding.tvRotating6, 1.5f)
-            }
-
-            progress in 7000..7999 -> {
-                CommonUtils.scaleView(mBinding.tvRotating7, 1.5f)
-            }
-
-            progress in 8000..8999 -> {
-                CommonUtils.scaleView(mBinding.tvRotating8, 1.5f)
-            }
-
-            progress in 9000..9999 -> {
-                CommonUtils.scaleView(mBinding.tvRotating9, 1.5f)
-            }
-
-            progress in 10000..10999 -> {
-                CommonUtils.scaleView(mBinding.tvRotating10, 1.5f)
-            }
-
-            progress in 11000..11999 -> {
-                CommonUtils.scaleView(mBinding.tvRotating11, 1.5f)
-            }
-
-            progress >= 12000 -> {
-                CommonUtils.scaleView(mBinding.tvRotating12, 1.5f)
-            }
-        }
-    }
-
-    private fun initRotatingSpeed(view: View) {
-        view.clearAnimation()
-        CommonUtils.scaleView(view, 1f);
+    private fun initRotatingSpeed(speed: Int) {
+        mBinding.tvRotating0.setCurrentValue(speed)
+        mBinding.tvRotating1.setCurrentValue(speed)
+        mBinding.tvRotating2.setCurrentValue(speed)
+        mBinding.tvRotating3.setCurrentValue(speed)
+        mBinding.tvRotating4.setCurrentValue(speed)
+        mBinding.tvRotating5.setCurrentValue(speed)
+        mBinding.tvRotating6.setCurrentValue(speed)
+        mBinding.tvRotating7.setCurrentValue(speed)
+        mBinding.tvRotating8.setCurrentValue(speed)
+        mBinding.tvRotating9.setCurrentValue(speed)
+        mBinding.tvRotating10.setCurrentValue(speed)
+        mBinding.tvRotating11.setCurrentValue(speed)
+        mBinding.tvRotating12.setCurrentValue(speed)
     }
 
     private var speed = 100
@@ -233,7 +185,7 @@ class MainActivity : AppCompatActivity() {
         @SuppressLint("SetTextI18n")
         override fun handleMessage(msg: Message) {
             val speed = msg.data.getInt(KEY_PROGRESS)
-            setRotatingSpeed(speed)
+            initRotatingSpeed(speed)
         }
 
     }

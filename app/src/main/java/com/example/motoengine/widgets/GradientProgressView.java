@@ -1,4 +1,4 @@
-package com.example.motoengine;
+package com.example.motoengine.widgets;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -14,7 +14,6 @@ import android.graphics.RectF;
 import android.graphics.Shader;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.ProgressBar;
 
 import androidx.annotation.ColorInt;
 

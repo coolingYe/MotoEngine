@@ -22,7 +22,7 @@
         app:layout_constraintEnd_toEndOf="@+id/progress_speed"
         app:layout_constraintBottom_toTopOf="@+id/progress_speed"/>
     
-    <com.example.motoengine.GradientProgressView
+    <com.example.motoengine.widgets.GradientProgressView
         android:id="@+id/progress_speed"
         android:layout_width="640dp"
         android:layout_height="81dp"
