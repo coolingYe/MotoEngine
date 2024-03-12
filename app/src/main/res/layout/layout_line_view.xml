@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/black">
+
+    <LinearLayout
+        android:id="@+id/ll_speed"
+        android:layout_width="700dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.example.motoengine.widgets.ExcludeFontPaddingTextView
+            android:id="@+id/tv_rotating_0"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_weight="1"
+            android:fontFamily="@font/kernel_bold_oblique"
+            android:text="0"
+            android:visibility="gone"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
+
+        <com.example.motoengine.widgets.ExcludeFontPaddingTextView
+            android:id="@+id/tv_rotating_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_weight="1"
+            android:fontFamily="@font/kernel_bold_oblique"
+            android:gravity="center"
+            android:text="1"
+            android:visibility="visible"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
+
+        <com.example.motoengine.widgets.ExcludeFontPaddingTextView
+            android:id="@+id/tv_rotating_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_weight="1"
+            android:fontFamily="@font/kernel_bold_oblique"
+            android:gravity="center"
+            android:text="2"
+            android:visibility="visible"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
+
+        <com.example.motoengine.widgets.ExcludeFontPaddingTextView
+            android:id="@+id/tv_rotating_3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_weight="1"
+            android:fontFamily="@font/kernel_bold_oblique"
+            android:gravity="center"
+            android:text="3"
+            android:visibility="visible"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
+
+        <com.example.motoengine.widgets.ExcludeFontPaddingTextView
+            android:id="@+id/tv_rotating_4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_weight="1"
+            android:fontFamily="@font/kernel_bold_oblique"
+            android:gravity="center"
+            android:text="4"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
+
+        <com.example.motoengine.widgets.ExcludeFontPaddingTextView
+            android:id="@+id/tv_rotating_5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_weight="1"
+            android:fontFamily="@font/kernel_bold_oblique"
+            android:gravity="center"
+            android:text="5"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
+
+        <com.example.motoengine.widgets.ExcludeFontPaddingTextView
+            android:id="@+id/tv_rotating_6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_weight="1"
+            android:fontFamily="@font/kernel_bold_oblique"
+            android:gravity="center"
+            android:text="6"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
+
+        <com.example.motoengine.widgets.ExcludeFontPaddingTextView
+            android:id="@+id/tv_rotating_7"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_weight="1"
+            android:fontFamily="@font/kernel_bold_oblique"
+            android:gravity="center"
+            android:text="7"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
+
+        <com.example.motoengine.widgets.ExcludeFontPaddingTextView
+            android:id="@+id/tv_rotating_8"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_weight="1"
+            android:fontFamily="@font/kernel_bold_oblique"
+            android:gravity="center"
+            android:text="8"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
+
+        <com.example.motoengine.widgets.ExcludeFontPaddingTextView
+            android:id="@+id/tv_rotating_9"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_weight="1"
+            android:fontFamily="@font/kernel_bold_oblique"
+            android:gravity="center"
+            android:text="9"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
+
+        <com.example.motoengine.widgets.ExcludeFontPaddingTextView
+            android:id="@+id/tv_rotating_10"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_weight="1"
+            android:fontFamily="@font/kernel_bold_oblique"
+            android:gravity="center"
+            android:text="10"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
+
+        <com.example.motoengine.widgets.ExcludeFontPaddingTextView
+            android:id="@+id/tv_rotating_11"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_weight="1"
+            android:fontFamily="@font/kernel_bold_oblique"
+            android:gravity="center"
+            android:text="11"
+            android:textColor="#ED1918"
+            android:textSize="30sp" />
+
+        <com.example.motoengine.widgets.ExcludeFontPaddingTextView
+            android:id="@+id/tv_rotating_12"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_weight="1"
+            android:fontFamily="@font/kernel_bold_oblique"
+            android:gravity="center"
+            android:text="12"
+            android:textColor="#ED1918"
+            android:textSize="30sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_speed_line"
+        android:layout_width="700dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="55dp"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/ll_speed"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/line"
+            android:paddingStart="2dp"
+            android:paddingEnd="2dp"/>
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/line"
+            android:paddingStart="2dp"
+            android:paddingEnd="2dp"/>
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/line"
+            android:paddingStart="2dp"
+            android:paddingEnd="2dp"/>
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/line"
+            android:paddingStart="2dp"
+            android:paddingEnd="2dp"/>
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/line"
+            android:paddingStart="2dp"
+            android:paddingEnd="2dp"/>
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/line"
+            android:paddingStart="2dp"
+            android:paddingEnd="2dp"/>
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/line"
+            android:paddingStart="2dp"
+            android:paddingEnd="2dp"/>
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/line"
+            android:paddingStart="2dp"
+            android:paddingEnd="2dp"/>
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/line"
+            android:paddingStart="2dp"
+            android:paddingEnd="2dp"/>
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/line"
+            android:paddingStart="2dp"
+            android:paddingEnd="2dp"/>
+        
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/line"
+            android:paddingStart="2dp"
+            android:paddingEnd="2dp"/>
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/line"
+            android:paddingStart="2dp"
+            android:paddingEnd="2dp"/>
+        
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
