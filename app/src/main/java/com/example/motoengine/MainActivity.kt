@@ -1,6 +1,7 @@
 package com.example.motoengine
 
 import android.bluetooth.BluetoothManager
+import android.content.Intent
 import com.example.motoengine.base.BaseActivity
 import com.example.motoengine.databinding.ActivityMainBinding
 
@@ -29,6 +30,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             showToast("Please turn on Bluetooth")
             return
         }
+        startActivity(Intent(this, BluetoothListActivity::class.java))
     }
 
 }
