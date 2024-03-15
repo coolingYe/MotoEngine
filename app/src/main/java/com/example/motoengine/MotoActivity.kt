@@ -65,7 +65,7 @@ class MotoActivity : BaseActivity<ActivityMotoBinding>() {
                 mBinding.progressSpeed.progress = mBinding.seekBar.progress.toFloat()
                 mBinding.tvSpeed.text = mBinding.progressSpeed.progress.toInt().toString()
 
-                val message = Message.obtain(mHandle);
+                val message = Message.obtain(mHandle)
                 val bundle = Bundle()
                 bundle.putInt(KEY_PROGRESS, progress)
                 message.data = bundle
