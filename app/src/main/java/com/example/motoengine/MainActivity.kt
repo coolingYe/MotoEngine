@@ -116,9 +116,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), EasyPermissions.Permis
                 Constant.MESSAGE_STATE_CHANGE -> {
                     when (msg.arg1) {
                         BluetoothEngine.STATE_CONNECTING -> {
-
+                            Log.d(TAG, "STATE_CONNECTING")
                         }
                         BluetoothEngine.STATE_CONNECTED -> {
+                            Log.d(TAG, "STATE_CONNECTED")
                             mHandle.post(mRunnableSend)
                         }
                         else -> {}

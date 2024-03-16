@@ -1,15 +1,19 @@
 package com.example.motoengine.bluetooth;
 
+import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
+
+import androidx.core.app.ActivityCompat;
 
 import com.example.motoengine.base.Constant;
 
@@ -19,8 +23,7 @@ import java.io.OutputStream;
 import java.util.UUID;
 
 
-public class BluetoothEngine
-{
+public class BluetoothEngine {
     // Debugging
     private static final String TAG = "BluetoothEngine";
 
@@ -29,7 +32,7 @@ public class BluetoothEngine
     private static final String NAME_INSECURE = TAG + "Insecure";
 
     // Unique UUID for this application
-    private static final UUID MY_UUID_SECURE   = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+    private static final UUID MY_UUID_SECURE = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     private static final UUID MY_UUID_INSECURE = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
     // Member fields
@@ -48,8 +51,7 @@ public class BluetoothEngine
     public static final int STATE_CONNECTED = 3;  // now connected to a remote device
 
     // Making default constructor private
-    private BluetoothEngine()
-    {
+    private BluetoothEngine() {
         mAdapter = null;
         mHandler = null;
     }
@@ -60,8 +62,7 @@ public class BluetoothEngine
      * @param context The UI Activity Context
      * @param handler A Handler to send messages back to the UI Activity
      */
-    public BluetoothEngine(Context context, Handler handler)
-    {
+    public BluetoothEngine(Context context, Handler handler) {
         mAdapter = BluetoothAdapter.getDefaultAdapter();
         mState = STATE_NONE;
         mHandler = handler;
@@ -72,8 +73,7 @@ public class BluetoothEngine
      *
      * @param state An integer defining the current connection state
      */
-    private synchronized void setState(int state)
-    {
+    private synchronized void setState(int state) {
         Log.d(TAG, "setState() " + mState + " -> " + state);
 
         mState = state;
@@ -85,8 +85,7 @@ public class BluetoothEngine
     /**
      * Return the current connection state.
      */
-    public synchronized int getState()
-    {
+    public synchronized int getState() {
         return mState;
     }
 
@@ -94,20 +93,17 @@ public class BluetoothEngine
      * Start the chat service. Specifically start AcceptThread to begin a
      * session in listening (server) mode. Called by the Activity onResume()
      */
-    public synchronized void start()
-    {
+    public synchronized void start() {
         Log.d(TAG, "start");
 
         // Cancel any thread attempting to make a connection
-        if (mConnectThread != null)
-        {
+        if (mConnectThread != null) {
             mConnectThread.cancel();
             mConnectThread = null;
         }
 
         // Cancel any thread currently running a connection
-        if (mConnectedThread != null)
-        {
+        if (mConnectedThread != null) {
             mConnectedThread.cancel();
             mConnectedThread = null;
         }
@@ -116,14 +112,12 @@ public class BluetoothEngine
         setState(STATE_LISTEN);
 
         // Start the thread to listen on a BluetoothServerSocket
-        if (mSecureAcceptThread == null)
-        {
+        if (mSecureAcceptThread == null) {
             mSecureAcceptThread = new AcceptThread(true);
             mSecureAcceptThread.start();
         }
 
-        if (mInsecureAcceptThread == null)
-        {
+        if (mInsecureAcceptThread == null) {
             mInsecureAcceptThread = new AcceptThread(false);
             mInsecureAcceptThread.start();
         }
@@ -135,23 +129,19 @@ public class BluetoothEngine
      * @param device The BluetoothDevice to connect
      * @param secure Socket Security type - Secure (true) , Insecure (false)
      */
-    public synchronized void connect(BluetoothDevice device, boolean secure)
-    {
+    public synchronized void connect(BluetoothDevice device, boolean secure) {
         Log.d(TAG, "connect to: " + device.getAddress());
 
         // Cancel any thread attempting to make a connection
-        if (mState == STATE_CONNECTING)
-        {
-            if (mConnectThread != null)
-            {
+        if (mState == STATE_CONNECTING) {
+            if (mConnectThread != null) {
                 mConnectThread.cancel();
                 mConnectThread = null;
             }
         }
 
         // Cancel any thread currently running a connection
-        if (mConnectedThread != null)
-        {
+        if (mConnectedThread != null) {
             mConnectedThread.cancel();
             mConnectedThread = null;
         }
@@ -170,32 +160,27 @@ public class BluetoothEngine
      * @param socket The BluetoothSocket on which the connection was made
      * @param device The BluetoothDevice that has been connected
      */
-    public synchronized void connected(BluetoothSocket socket, BluetoothDevice device, final String socketType)
-    {
+    public synchronized void connected(BluetoothSocket socket, BluetoothDevice device, final String socketType) {
         Log.d(TAG, "connected, Socket Type:" + socketType);
 
         // Cancel the thread that completed the connection
-        if (mConnectThread != null)
-        {
+        if (mConnectThread != null) {
             mConnectThread.cancel();
             mConnectThread = null;
         }
 
         // Cancel any thread currently running a connection
-        if (mConnectedThread != null)
-        {
+        if (mConnectedThread != null) {
             mConnectedThread.cancel();
             mConnectedThread = null;
         }
 
         // Cancel the accept thread because we only want to connect to one device
-        if (mSecureAcceptThread != null)
-        {
+        if (mSecureAcceptThread != null) {
             mSecureAcceptThread.cancel();
             mSecureAcceptThread = null;
         }
-        if (mInsecureAcceptThread != null)
-        {
+        if (mInsecureAcceptThread != null) {
             mInsecureAcceptThread.cancel();
             mInsecureAcceptThread = null;
         }
@@ -218,30 +203,25 @@ public class BluetoothEngine
     /**
      * Stop all threads
      */
-    public synchronized void stop()
-    {
+    public synchronized void stop() {
         Log.d(TAG, "stop");
 
-        if (mConnectThread != null)
-        {
+        if (mConnectThread != null) {
             mConnectThread.cancel();
             mConnectThread = null;
         }
 
-        if (mConnectedThread != null)
-        {
+        if (mConnectedThread != null) {
             mConnectedThread.cancel();
             mConnectedThread = null;
         }
 
-        if (mSecureAcceptThread != null)
-        {
+        if (mSecureAcceptThread != null) {
             mSecureAcceptThread.cancel();
             mSecureAcceptThread = null;
         }
 
-        if (mInsecureAcceptThread != null)
-        {
+        if (mInsecureAcceptThread != null) {
             mInsecureAcceptThread.cancel();
             mInsecureAcceptThread = null;
         }
@@ -256,16 +236,13 @@ public class BluetoothEngine
      * @param out The bytes to write
      * @see ConnectedThread#write(byte[])
      */
-    public void write(byte[] out)
-    {
+    public void write(byte[] out) {
         // Create temporary object
         ConnectedThread r;
 
         // Synchronize a copy of the ConnectedThread
-        synchronized (this)
-        {
-            if (mState != STATE_CONNECTED)
-            {
+        synchronized (this) {
+            if (mState != STATE_CONNECTED) {
                 return;
             }
 
@@ -279,8 +256,7 @@ public class BluetoothEngine
     /**
      * Indicate that the connection attempt failed and notify the UI Activity.
      */
-    private void connectionFailed()
-    {
+    private void connectionFailed() {
         // Send a failure message back to the Activity
         Message msg = mHandler.obtainMessage(Constant.MESSAGE_TOAST);
         Bundle bundle = new Bundle();
@@ -295,8 +271,7 @@ public class BluetoothEngine
     /**
      * Indicate that the connection was lost and notify the UI Activity.
      */
-    private void connectionLost()
-    {
+    private void connectionLost() {
         // Send a failure message back to the Activity
         Message msg = mHandler.obtainMessage(Constant.MESSAGE_TOAST);
         Bundle bundle = new Bundle();
@@ -313,39 +288,30 @@ public class BluetoothEngine
      * like a server-side client. It runs until a connection is accepted
      * (or until cancelled).
      */
-    private class AcceptThread extends Thread
-    {
+    private class AcceptThread extends Thread {
         // The local server socket
         private final BluetoothServerSocket mmServerSocket;
         private String mSocketType;
 
-        public AcceptThread(boolean secure)
-        {
+        public AcceptThread(boolean secure) {
             BluetoothServerSocket tmp = null;
             mSocketType = secure ? "Secure" : "Insecure";
 
             // Create a new listening server socket
-            try
-            {
-                if (secure)
-                {
+            try {
+                if (secure) {
                     tmp = mAdapter.listenUsingRfcommWithServiceRecord(NAME_SECURE, MY_UUID_SECURE);
-                }
-                else
-                {
+                } else {
                     tmp = mAdapter.listenUsingInsecureRfcommWithServiceRecord(NAME_INSECURE, MY_UUID_INSECURE);
                 }
-            }
-            catch (IOException e)
-            {
+            } catch (IOException e) {
                 Log.e(TAG, "Listen to " + mSocketType + " socket type failed. More: ", e);
             }
 
             mmServerSocket = tmp;
         }
 
-        public void run()
-        {
+        public void run() {
             Log.d(TAG, "Socket Type: " + mSocketType + " BEGIN mAcceptThread " + this);
 
             setName("AcceptThread" + mSocketType);
@@ -353,27 +319,20 @@ public class BluetoothEngine
             BluetoothSocket socket;
 
             // Listen to the server socket if we're not connected
-            while (mState != STATE_CONNECTED)
-            {
-                try
-                {
+            while (mState != STATE_CONNECTED) {
+                try {
                     // This is a blocking call and will only return on a
                     // successful connection or an exception
                     socket = mmServerSocket.accept();
-                }
-                catch (IOException e)
-                {
+                } catch (IOException e) {
                     Log.e(TAG, "Socket Type: " + mSocketType + " accept() failed", e);
                     break;
                 }
 
                 // If a connection was accepted
-                if (socket != null)
-                {
-                    synchronized (BluetoothEngine.this)
-                    {
-                        switch (mState)
-                        {
+                if (socket != null) {
+                    synchronized (BluetoothEngine.this) {
+                        switch (mState) {
                             case STATE_LISTEN:
                             case STATE_CONNECTING:
                                 // Situation normal. Start the connected thread.
@@ -383,12 +342,9 @@ public class BluetoothEngine
                             case STATE_NONE:
                             case STATE_CONNECTED:
                                 // Either not ready or already connected. Terminate new socket.
-                                try
-                                {
+                                try {
                                     socket.close();
-                                }
-                                catch (IOException e)
-                                {
+                                } catch (IOException e) {
                                     Log.e(TAG, "Could not close unwanted socket", e);
                                 }
                                 break;
@@ -400,16 +356,12 @@ public class BluetoothEngine
             Log.d(TAG, "END mAcceptThread, socket Type: " + mSocketType);
         }
 
-        public void cancel()
-        {
+        public void cancel() {
             Log.d(TAG, "Socket Type " + mSocketType + " cancel " + this);
 
-            try
-            {
+            try {
                 mmServerSocket.close();
-            }
-            catch (IOException e)
-            {
+            } catch (IOException e) {
                 Log.e(TAG, "Socket Type" + mSocketType + "close() of server failed", e);
             }
         }
@@ -420,41 +372,32 @@ public class BluetoothEngine
      * with a device. It runs straight through; the connection either
      * succeeds or fails.
      */
-    private class ConnectThread extends Thread
-    {
+    private class ConnectThread extends Thread {
         private final BluetoothSocket mmSocket;
         private final BluetoothDevice mmDevice;
 
         private String mSocketType;
 
-        public ConnectThread(BluetoothDevice device, boolean secure)
-        {
+        public ConnectThread(BluetoothDevice device, boolean secure) {
             mmDevice = device;
             BluetoothSocket tmp = null;
             mSocketType = secure ? "Secure" : "Insecure";
 
             // Get a BluetoothSocket for a connection with the given BluetoothDevice
-            try
-            {
-                if (secure)
-                {
+            try {
+                if (secure) {
                     tmp = device.createRfcommSocketToServiceRecord(MY_UUID_SECURE);
-                }
-                else
-                {
+                } else {
                     tmp = device.createInsecureRfcommSocketToServiceRecord(MY_UUID_INSECURE);
                 }
-            }
-            catch (IOException e)
-            {
+            } catch (IOException e) {
                 Log.e(TAG, "Socket Type: " + mSocketType + " create() failed", e);
             }
 
             mmSocket = tmp;
         }
 
-        public void run()
-        {
+        public void run() {
             Log.d(TAG, "BEGIN mConnectThread SocketType: " + mSocketType);
 
             setName("ConnectThread" + mSocketType);
