@@ -1,21 +1,17 @@
 package com.example.motoengine.bluetooth;
 
-import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 
-import androidx.core.app.ActivityCompat;
-
-import com.example.motoengine.base.Constant;
+import com.example.motoengine.utils.Constant;
 
 import java.io.IOException;
 import java.io.InputStream;

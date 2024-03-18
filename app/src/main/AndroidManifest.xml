@@ -26,8 +26,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".bluetooth.BluetoothListActivity" android:exported="false"/>
+
         <activity android:name=".MotoActivity" android:exported="false" android:screenOrientation="landscape"/>
+
+        <service android:name=".bluetooth.BluetoothService"/>
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.example.motoengine.base
+package com.example.motoengine.utils
 
 import android.content.Context
 import android.os.Bundle
