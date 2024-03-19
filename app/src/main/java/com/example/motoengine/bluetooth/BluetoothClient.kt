@@ -10,7 +10,7 @@ import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.example.motoengine.utils.CommService
-import com.fr3ts0n.prot.StreamHandler
+//import com.fr3ts0n.prot.StreamHandler
 import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
@@ -19,7 +19,7 @@ import java.util.logging.Level
 
 
 class BluetoothClient(mContext: Context, mHandler: Handler) : CommService(mHandler) {
-    private val ser = StreamHandler()
+    //private val ser = StreamHandler()
     private var mBtConnectThread: BtConnectThread? = null
     private var mBtWorkerThread: BtWorkerThread? = null
 
@@ -27,8 +27,8 @@ class BluetoothClient(mContext: Context, mHandler: Handler) : CommService(mHandl
         val mBluetoothManager = mContext.getSystemService(AppCompatActivity.BLUETOOTH_SERVICE) as BluetoothManager
         if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED)
         mBluetoothManager.adapter.cancelDiscovery()
-        elm.addTelegramWriter(ser)
-        ser.messageHandler = elm
+        //elm.addTelegramWriter(ser)
+        //ser.messageHandler = elm
     }
 
     /**
@@ -62,7 +62,7 @@ class BluetoothClient(mContext: Context, mHandler: Handler) : CommService(mHandl
      */
     override fun stop() {
         log.log(Level.FINE, "stop")
-        elm.removeTelegramWriter(ser)
+        //elm.removeTelegramWriter(ser)
 
         if (mBtConnectThread != null) {
             mBtConnectThread!!.cancel()
@@ -275,19 +275,19 @@ class BluetoothClient(mContext: Context, mHandler: Handler) : CommService(mHandl
             mmInStream = tmpIn
             mmOutStream = tmpOut
             // set streams
-            ser.setStreams(mmInStream, mmOutStream)
+            //ser.setStreams(mmInStream, mmOutStream)
         }
 
         @Synchronized
         fun write(buffer: ByteArray?) {
-            ser.writeTelegram(String(buffer!!).toCharArray())
+            //ser.writeTelegram(String(buffer!!).toCharArray())
         }
 
         override fun run() {
             log.log(Level.INFO, "BEGIN mBtWorkerThread")
             try {
                 // run the communication thread
-                ser.run()
+                //ser.run()
             } catch (ex: java.lang.Exception) {
                 // Intentionally ignore
                 log.log(Level.SEVERE, "Comm thread aborted", ex)

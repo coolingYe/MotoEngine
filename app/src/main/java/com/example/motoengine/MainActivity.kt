@@ -62,8 +62,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), EasyPermissions.Permis
             if (mBinder.mBluetoothEngine.state != BluetoothEngine.STATE_CONNECTED) {
                 return
             }
-            val pid = "01" + INIT_COMMANDS[mCMDPointer] + '\r'
-            mBinder.mBluetoothEngine.write(pid.toByteArray())
+            val pId = INIT_COMMANDS[mCMDPointer]
+            if (checkPID(pId).not()) return
+            val cmd = "01$pId\r"
+            mBinder.mBluetoothEngine.write(cmd.toByteArray())
             mCMDPointer++
         }
     }
@@ -92,6 +94,34 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), EasyPermissions.Permis
             Log.d(TAG, "onServiceDisconnected: ")
         }
 
+    }
+
+    private fun checkPID(pId: String): Boolean {
+        return when(pId) {
+            Constant.PIDS_COOLANT_TEMP -> {
+                mBinding.checkboxTemp.isChecked
+            }
+            Constant.PIDS_CONTROL_MODULE_VOLT -> {
+                mBinding.checkboxVolt.isChecked
+            }
+            Constant.PIDS_ENGINE_RMP -> {
+                mBinding.checkboxRmp.isChecked
+            }
+            Constant.PIDS_VEHICLE_SPEED -> {
+                mBinding.checkboxSpeed.isChecked
+            }
+            Constant.PIDS_ENGINE_LOAD -> {
+                mBinding.checkboxEngineLoad.isChecked
+            }
+            Constant.PIDS_FUEL_TANK_LEVEL -> {
+                mBinding.checkboxFuelTankLevel.isChecked
+            }
+            Constant.PIDS_DISTANCE_TRAVELED -> {
+                mBinding.checkboxTraveled.isChecked
+            }
+
+            else -> {false}
+        }
     }
 
     private fun sendCMD() {

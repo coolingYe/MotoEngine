@@ -3,7 +3,7 @@ package com.example.motoengine.utils
 import android.content.Context
 import android.os.Bundle
 import android.os.Handler
-import com.fr3ts0n.ecu.prot.obd.ElmProt
+//import com.fr3ts0n.ecu.prot.obd.ElmProt
 import java.util.logging.Level
 import java.util.logging.Logger
 
@@ -25,7 +25,7 @@ abstract class CommService(private val mHandler: Handler) {
 
     val log: Logger = Logger.getLogger(TAG)
 
-    val elm = ElmProt()
+    //val elm = ElmProt()
 
     @Synchronized
     fun setState(state: STATE) {
