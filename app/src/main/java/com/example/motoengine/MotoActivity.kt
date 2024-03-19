@@ -1,9 +1,13 @@
 package com.example.motoengine
 
 import android.annotation.SuppressLint
+import android.content.ComponentName
 import android.content.Context
+import android.content.Intent
+import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.Handler
+import android.os.IBinder
 import android.os.Looper
 import android.os.Message
 import android.util.Log
@@ -14,6 +18,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.motoengine.base.BaseActivity
+import com.example.motoengine.bluetooth.BluetoothService
 import com.example.motoengine.databinding.ActivityMotoBinding
 import kotlin.math.abs
 
@@ -24,6 +29,7 @@ class MotoActivity : BaseActivity<ActivityMotoBinding>() {
     }
 
     private lateinit var mViewModel: DataViewModel
+    private var mBinder: BluetoothService? = null
     private val mHandle: Handler = Handler(Looper.myLooper()!!)
     private val mMyHandle: MyHandler = MyHandler(Looper.myLooper()!!)
     private val mSpeedHandle: SpeedHandler = SpeedHandler(Looper.myLooper()!!)
@@ -40,6 +46,25 @@ class MotoActivity : BaseActivity<ActivityMotoBinding>() {
             selfTestRotatingSpeed()
             mHandle.postDelayed(this, 10)
         }
+    }
+
+    private val mServiceConnection: ServiceConnection = object : ServiceConnection {
+        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+            Log.d(MainActivity.TAG, "onServiceConnected: ")
+            mBinder = (service as BluetoothService.ServiceBinder).service
+            mBinder?.setOnEcuDataChangeListener { ecuData ->
+                if (ecuData.engineRmp != null) {
+                    if (ecuData.engineRmp == -1) return@setOnEcuDataChangeListener
+                    mBinding.progressSpeed.progress = ecuData.engineRmp!!.toFloat()
+                    mBinding.tvSpeed.text = ecuData.engineRmp.toString()
+                }
+            }
+        }
+
+        override fun onServiceDisconnected(name: ComponentName?) {
+            Log.d(MainActivity.TAG, "onServiceDisconnected: ")
+        }
+
     }
 
     override fun getLayout(): Int = R.layout.activity_moto
@@ -114,15 +139,20 @@ class MotoActivity : BaseActivity<ActivityMotoBinding>() {
 
     private fun selfTestRotatingSpeed() {
         if (rotatingSpeed <= 10850 && !hasRotatingSpeed) {
-            rotatingSpeed += 50
+            rotatingSpeed += 150
         } else {
             if (rotatingSpeed <= 0) {
                 rotatingSpeed = 0
                 mHandle.removeCallbacksAndMessages(null)
+                bindService(
+                    Intent(this, BluetoothService::class.java),
+                    mServiceConnection,
+                    BIND_AUTO_CREATE
+                )
                 return
             }
             hasRotatingSpeed = true
-            rotatingSpeed -= 50
+            rotatingSpeed -= 150
         }
         mBinding.progressSpeed.progress = rotatingSpeed.toFloat()
         mBinding.tvSpeed.text = rotatingSpeed.toString()

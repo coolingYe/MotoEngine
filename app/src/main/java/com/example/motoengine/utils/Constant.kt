@@ -24,4 +24,14 @@ object Constant {
         "09", "0A", "0B", "0C", "0D", "0E", "0F", "10",
         "11", "12", "13", "14", "15", "16", "17", "18",
         "19", "1A", "1B", "1C", "1D", "1E", "1F", "20")
+
+    const val PIDS_ENGINE_LOAD = "04"
+    const val PIDS_COOLANT_TEMP = "05"
+    const val PIDS_ENGINE_RMP = "0C"
+    const val PIDS_VEHICLE_SPEED = "0D"
+    const val PIDS_TIME_SINCE_ENG_START = "1F"
+    const val PIDS_FUEL_TANK_LEVEL = "2F"
+    const val PIDS_DISTANCE_TRAVELED = "31"
+    const val PIDS_CONTROL_MODULE_VOLT = "42"
+    const val PIDS_TRANSMISSION_ACTUAL_GEAR = "A4"
 }

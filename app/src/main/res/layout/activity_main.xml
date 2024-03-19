@@ -16,21 +16,86 @@
             android:id="@+id/btn_connect"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
+            android:text="Connect"
             app:layout_constraintStart_toStartOf="parent"
-            android:text="Connect"/>
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btn_engine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Car"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_connect" />
 
         <TextView
-            android:id="@+id/tv_rpm"
+            android:id="@+id/tv_engine_data"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="26sp"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_engine">
+
+            <CheckBox
+                android:id="@+id/checkbox_rmp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="RMP"
+                android:checked="true"/>
+
+            <CheckBox
+                android:id="@+id/checkbox_speed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Speed"
+                android:checked="true"/>
+
+            <CheckBox
+                android:id="@+id/checkbox_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Temp"
+                android:checked="true"/>
+
+            <CheckBox
+                android:id="@+id/checkbox_engine_load"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Eng. Load"
+                android:checked="true"/>
+
+            <CheckBox
+                android:id="@+id/checkbox_volt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Volt"
+                android:checked="true"/>
+
+            <CheckBox
+                android:id="@+id/checkbox_traveled"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Traveled"
+                android:checked="true"/>
+
+            <CheckBox
+                android:id="@+id/checkbox_fuel_tank_level"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fuel tank level"
+                android:checked="true"/>
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </layout>
