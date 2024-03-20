@@ -2,7 +2,6 @@ package com.example.motoengine.bluetooth
 
 import android.annotation.SuppressLint
 import android.app.Service
-import android.bluetooth.BluetoothGattCallback
 import android.bluetooth.BluetoothManager
 import android.content.Intent
 import android.os.Binder
@@ -13,10 +12,10 @@ import android.os.Message
 import android.util.Log
 import android.widget.Toast
 import com.example.motoengine.MainActivity
-import com.example.motoengine.model.Bluetooth
 import com.example.motoengine.model.ECUData
 import com.example.motoengine.utils.Constant
 import com.example.motoengine.utils.ObdFactory
+import com.example.motoengine.utils.SPUtils
 import java.util.Locale
 
 class BluetoothService : Service() {
@@ -35,6 +34,18 @@ class BluetoothService : Service() {
 
     private var ecuData = ECUData()
 
+    private var mCMDPointer = -1
+
+    private val INIT_COMMANDS = arrayOf(
+        Constant.PIDS_COOLANT_TEMP,
+        Constant.PIDS_CONTROL_MODULE_VOLT,
+        Constant.PIDS_ENGINE_RMP,
+        Constant.PIDS_VEHICLE_SPEED,
+        Constant.PIDS_ENGINE_LOAD,
+        Constant.PIDS_FUEL_TANK_LEVEL,
+        Constant.PIDS_DISTANCE_TRAVELED
+    )
+
     companion object {
         const val TAG = "BluetoothService"
     }
@@ -44,18 +55,19 @@ class BluetoothService : Service() {
             if (mBluetoothEngine.state != BluetoothEngine.STATE_CONNECTED) {
                 return
             }
+            val pid = "01" + INIT_COMMANDS[mCMDPointer] + '\r'
+            if (checkPID(pid).not()) return
+            mBluetoothEngine.write(pid.toByteArray())
+            mCMDPointer++
+        }
+    }
 
-            mBluetoothEngine.write("0104\r".toByteArray())
-            mBluetoothEngine.write("0105\r".toByteArray())
+    private val mRunnableRMP = object : Runnable {
+        override fun run() {
+            if (mBluetoothEngine.state != BluetoothEngine.STATE_CONNECTED) {
+                return
+            }
             mBluetoothEngine.write("010C\r".toByteArray())
-            mBluetoothEngine.write("010D\r".toByteArray())
-            mBluetoothEngine.write("011F\r".toByteArray())
-            mBluetoothEngine.write("012F\r".toByteArray())
-            mBluetoothEngine.write("0131\r".toByteArray())
-            mBluetoothEngine.write("0142\r".toByteArray())
-            mBluetoothEngine.write("01A4\r".toByteArray())
-
-            mHandle.postDelayed(this, 300)
         }
     }
 
@@ -77,6 +89,23 @@ class BluetoothService : Service() {
     fun connectBluetooth(address: String, secure: Boolean) {
         val bluetoothDevice = mBluetoothManager.adapter.getRemoteDevice(address)
         mBluetoothEngine.connect(bluetoothDevice, secure)
+    }
+
+    private fun sendCMD() {
+        if (mCMDPointer >= INIT_COMMANDS.size) {
+            mCMDPointer = -1
+        }
+
+        if (mCMDPointer < 0) {
+            mCMDPointer = 0
+        }
+        mHandle.post(mRunnableSend)
+    }
+
+    fun checkPID(id: String): Boolean {
+        Constant.valueToKeyPID[id]?.let {
+           return SPUtils.getInstance().getBoolean(it, false)
+        } ?: return false
     }
 
     private fun showToast(content: String) {
@@ -110,9 +139,9 @@ class BluetoothService : Service() {
 
                         BluetoothEngine.STATE_CONNECTED -> {
                             Log.d(MainActivity.TAG, "STATE_CONNECTED")
-                            //mHandle.post(mRunnableSend)
-                            successCallback.invoke(mBluetoothEngine)
                             showToast("Connected")
+                            successCallback.invoke(mBluetoothEngine)
+                            mHandle.postDelayed(mRunnableRMP, 1000)
                         }
 
                         BluetoothEngine.STATE_LISTEN, BluetoothEngine.STATE_NONE -> {
@@ -130,11 +159,22 @@ class BluetoothService : Service() {
                     readMessage = readMessage.uppercase(Locale.ROOT)
                     val lastChar = readMessage[readMessage.length - 1]
                     //lastChar need doing something
+                    Log.d(TAG, "result: $readMessage")
 
                     if (lastChar == '>') {
                         val ecuDataNew = ObdFactory.getEcuData(ecuData, readMessage)
                         ecuDataCallback.invoke(ecuDataNew)
+                        val delayed = SPUtils.getInstance().getInt("SP_BT_SEND_DELAYED", 500).toLong()
+                        mHandle.postDelayed(mRunnableRMP, delayed)
                     }
+                }
+
+                Constant.MESSAGE_WRITE -> {
+                    val writeBuf = msg.obj as ByteArray
+
+                    // construct a string from the buffer
+                    val writeMessage = String(writeBuf)
+                    Log.d(TAG, "send: $writeMessage")
                 }
             }
         }

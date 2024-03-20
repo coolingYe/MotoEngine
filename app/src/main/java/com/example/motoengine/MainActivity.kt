@@ -29,19 +29,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), EasyPermissions.Permis
 
     private val mHandle = Handler(Looper.myLooper()!!)
 
-    private var mCMDPointer = -1
-
-    private val INIT_COMMANDS = arrayOf(
-        Constant.PIDS_COOLANT_TEMP,
-        Constant.PIDS_CONTROL_MODULE_VOLT,
-        Constant.PIDS_ENGINE_RMP,
-        Constant.PIDS_VEHICLE_SPEED,
-        Constant.PIDS_ENGINE_LOAD,
-        Constant.PIDS_FUEL_TANK_LEVEL,
-        Constant.PIDS_DISTANCE_TRAVELED
-    )
-
-
     companion object {
         const val TAG = "MainActivity"
     }
@@ -57,34 +44,24 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), EasyPermissions.Permis
             }
         }
 
-    private val mRunnableSend = object : Runnable {
-        override fun run() {
-            if (mBinder.mBluetoothEngine.state != BluetoothEngine.STATE_CONNECTED) {
-                return
-            }
-            val pid = "01" + INIT_COMMANDS[mCMDPointer] + '\r'
-            mBinder.mBluetoothEngine.write(pid.toByteArray())
-            mCMDPointer++
-        }
-    }
-
     private val mServiceConnection: ServiceConnection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
             Log.d(TAG, "onServiceConnected: ")
             mBinder = (service as BluetoothService.ServiceBinder).service
             mBinder.setOnEcuDataChangeListener { ecuData ->
-                mBinding.tvEngineData.text = "Speed: ${ecuData.vehicleSpeed}\n" +
-                        "Eng. RMP: ${ecuData.engineRmp}\n" +
-                        "Temp: ${ecuData.coolantTemp}\n" +
-                        "Fuel last: ${ecuData.fuelTankLevel}\n" +
-                        "Travel distance: ${ecuData.distanceTraveled}\n" +
-                        "Volt: ${ecuData.controlModuleVolt}\n" +
-                        "Gear: ${ecuData.currentGear}\n"
-                sendCMD()
+//                mBinding.tvEngineData.text = "Speed: ${ecuData.vehicleSpeed}\n" +
+//                        "Eng. RMP: ${ecuData.engineRmp}\n" +
+//                        "Temp: ${ecuData.coolantTemp}\n" +
+//                        "Fuel last: ${ecuData.fuelTankLevel}\n" +
+//                        "Travel distance: ${ecuData.distanceTraveled}\n" +
+//                        "Volt: ${ecuData.controlModuleVolt}\n" +
+//                        "Gear: ${ecuData.currentGear}"
+                mBinding.tvEngineData.text = "Eng. RMP: ${ecuData.engineRmp}"
+
             }
 
             mBinder.setOnConnectSuccessListener {
-                sendCMD()
+
             }
         }
 
@@ -92,17 +69,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), EasyPermissions.Permis
             Log.d(TAG, "onServiceDisconnected: ")
         }
 
-    }
-
-    private fun sendCMD() {
-        if (mCMDPointer >= INIT_COMMANDS.size) {
-            mCMDPointer = -1
-        }
-
-        if (mCMDPointer < 0) {
-            mCMDPointer = 0
-        }
-        mHandle.post(mRunnableSend)
     }
 
     override fun getLayout(): Int = R.layout.activity_main
@@ -125,19 +91,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), EasyPermissions.Permis
             if (mBinder.mBluetoothEngine.state == BluetoothEngine.STATE_CONNECTED)
                 startActivity(Intent(this, MotoActivity::class.java))
         }
+
+        mBinding.btnSetting.setOnClickListener {
+            startActivity(Intent(this, SettingActivity::class.java))
+        }
     }
 
     override fun initData() {
-
-    }
-
-    /**
-     * Initiate a connect to the selected bluetooth device
-     *
-     * @param address bluetooth device address
-     * @param secure  flag to indicate if the connection shall be secure, or not
-     */
-    private fun connectBluetooth(address: String, secure: Boolean) {
 
     }
 

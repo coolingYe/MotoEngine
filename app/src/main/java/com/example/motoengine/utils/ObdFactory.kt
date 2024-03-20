@@ -7,6 +7,7 @@ import com.example.motoengine.model.ECUData
 object ObdFactory {
 
     fun getEcuData(ecuData: ECUData,readMessage: String): ECUData {
+        if (readMessage.length < 4) return ecuData
         when (cleanResponse(readMessage).substring(2, 4)) {
             Constant.PIDS_ENGINE_RMP -> {
                 ecuData.engineRmp = getEngineRPM(readMessage)

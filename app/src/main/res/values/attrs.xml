@@ -22,4 +22,9 @@
         <attr name="min" format="integer"/>
     </declare-styleable>
 
+    <declare-styleable name="CustomerFlowView">
+        <attr name="textPaddingStart" format="dimension" />
+        <attr name="textPaddingTop" format="dimension" />
+    </declare-styleable>
+
 </resources>

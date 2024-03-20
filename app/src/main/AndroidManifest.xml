@@ -31,6 +31,8 @@
 
         <activity android:name=".MotoActivity" android:exported="false" android:screenOrientation="landscape"/>
 
+        <activity android:name=".SettingActivity" android:exported="false"/>
+
         <service android:name=".bluetooth.BluetoothService"/>
     </application>
 
