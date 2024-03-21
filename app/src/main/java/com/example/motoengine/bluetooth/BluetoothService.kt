@@ -64,6 +64,10 @@ class BluetoothService : Service() {
 
     private val mRunnableRMP = object : Runnable {
         override fun run() {
+            if (SPUtils.getInstance().getBoolean("SP_BT_SEND_CYCLE", false).not()) {
+                return
+            }
+
             if (mBluetoothEngine.state != BluetoothEngine.STATE_CONNECTED) {
                 return
             }

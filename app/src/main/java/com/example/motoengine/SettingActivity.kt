@@ -28,6 +28,8 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
         initFlowLayout()
         val sendDelayed = SPUtils.getInstance().getInt("SP_BT_SEND_DELAYED", 500).toString()
         mBinding.tvSendDelayedInput.setText(sendDelayed)
+        val sendCycle = SPUtils.getInstance().getBoolean("SP_BT_SEND_CYCLE", false)
+        mBinding.switchCycle.isChecked = sendCycle
     }
 
     override fun initListeners() {
@@ -39,6 +41,10 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
             val delayed = mBinding.tvSendDelayedInput.text.toString()
             if (delayed.isNotEmpty()) SPUtils.getInstance().put("SP_BT_SEND_DELAYED", delayed.toInt())
             finish()
+        }
+
+        mBinding.switchCycle.setOnCheckedChangeListener { _, isChecked ->
+            SPUtils.getInstance().put("SP_BT_SEND_CYCLE", isChecked)
         }
     }
 

@@ -46,6 +46,54 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingBtnMain"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_margin="16dp"
+            android:src="@drawable/icon_more"
+            app:fabCustomSize="64dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:maxImageSize="32dp" />
+
+
+
+            <ImageView
+                android:id="@+id/floatingBtnSend"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/shape_c24_2196f3"
+                android:elevation="5dp"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="@+id/floatingBtn2"
+                app:layout_constraintEnd_toStartOf="@+id/floatingBtn2" />
+
+            <ImageView
+                android:id="@+id/floatingBtn2"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="@drawable/shape_c24_2196f3"
+                android:scaleType="fitCenter"
+                android:elevation="5dp"
+                android:visibility="gone"
+                android:layout_marginBottom="32dp"
+                app:layout_constraintBottom_toTopOf="@+id/floatingBtnMain"
+                app:layout_constraintEnd_toEndOf="@+id/floatingBtnMain"/>
+
+            <ImageView
+                android:id="@+id/floatingBtn3"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="@drawable/shape_c24_2196f3"
+                android:elevation="5dp"
+                android:visibility="gone"
+                android:layout_marginEnd="32dp"
+                app:layout_constraintEnd_toStartOf="@+id/floatingBtnMain"
+                app:layout_constraintBottom_toBottomOf="@+id/floatingBtnMain"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

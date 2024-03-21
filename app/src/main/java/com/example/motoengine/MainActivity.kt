@@ -1,6 +1,10 @@
 package com.example.motoengine
 
 import android.Manifest
+import android.animation.Animator
+import android.animation.AnimatorInflater
+import android.animation.AnimatorSet
+import android.annotation.SuppressLint
 import android.bluetooth.BluetoothManager
 import android.content.ComponentName
 import android.content.Intent
@@ -12,6 +16,7 @@ import android.os.Looper
 import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.isVisible
 import com.example.motoengine.base.BaseActivity
 import com.example.motoengine.bluetooth.BluetoothEngine
 import com.example.motoengine.bluetooth.BluetoothListActivity
@@ -28,6 +33,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), EasyPermissions.Permis
     private lateinit var mBinder: BluetoothService
 
     private val mHandle = Handler(Looper.myLooper()!!)
+
+    private lateinit var translateAnimation1: AnimatorSet
+    private lateinit var translateAnimation2: AnimatorSet
+    private lateinit var translateAnimation3: AnimatorSet
+
+    private var isAdd = false;
 
     companion object {
         const val TAG = "MainActivity"
@@ -73,6 +84,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), EasyPermissions.Permis
 
     override fun getLayout(): Int = R.layout.activity_main
 
+    @SuppressLint("ResourceType")
     override fun initViews() {
         mBluetoothManager = getSystemService(BLUETOOTH_SERVICE) as BluetoothManager
         bindService(
@@ -80,6 +92,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), EasyPermissions.Permis
             mServiceConnection,
             BIND_AUTO_CREATE
         )
+
+        translateAnimation1 = AnimatorInflater.loadAnimator(this, R.anim.add_bill_anim) as AnimatorSet
+        translateAnimation2 = AnimatorInflater.loadAnimator(this, R.anim.add_bill_anim) as AnimatorSet
+        translateAnimation3 = AnimatorInflater.loadAnimator(this, R.anim.add_bill_anim) as AnimatorSet
+
     }
 
     override fun initListeners() {
@@ -94,6 +111,24 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), EasyPermissions.Permis
 
         mBinding.btnSetting.setOnClickListener {
             startActivity(Intent(this, SettingActivity::class.java))
+        }
+
+        mBinding.floatingBtnMain.setOnClickListener {
+            isAdd = isAdd.not()
+            mBinding.floatingBtnSend.isVisible = isAdd
+            mBinding.floatingBtn2.isVisible = isAdd
+            mBinding.floatingBtn3.isVisible = isAdd
+            if (isAdd) {
+                translateAnimation1.setTarget(mBinding.floatingBtnSend)
+                translateAnimation1.startDelay = 150
+                translateAnimation1.start()
+                translateAnimation2.setTarget(mBinding.floatingBtn2)
+                translateAnimation2.startDelay = 200
+                translateAnimation2.start()
+                translateAnimation3.setTarget(mBinding.floatingBtn3)
+                translateAnimation3.startDelay = 250
+                translateAnimation3.start()
+            }
         }
     }
 

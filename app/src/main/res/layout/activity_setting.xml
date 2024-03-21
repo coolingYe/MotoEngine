@@ -37,6 +37,24 @@
                 app:layout_constraintStart_toEndOf="@+id/tv_send_delayed"
                 app:layout_constraintTop_toTopOf="@+id/tv_send_delayed" />
 
+            <TextView
+                android:id="@+id/tv_cycle_send"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cycle send"
+                android:layout_marginTop="12dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_send_delayed"/>
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switch_cycle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16sp"
+                app:layout_constraintTop_toTopOf="@+id/tv_cycle_send"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_cycle_send"
+                app:layout_constraintStart_toEndOf="@+id/tv_cycle_send" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.example.motoengine.widgets.CustomerFlowLayout
