@@ -30,6 +30,8 @@ class BluetoothService : Service() {
 
     lateinit var ecuDataCallback: (ECUData) -> Unit
 
+    lateinit var logcatCallback: (String) -> Unit
+
     lateinit var successCallback: (BluetoothEngine)->Unit
 
     private var ecuData = ECUData()
@@ -124,6 +126,10 @@ class BluetoothService : Service() {
         this.successCallback = callback
     }
 
+    fun setOnLogcatListener(callback: (String) -> Unit) {
+        this.logcatCallback = callback
+    }
+
     override fun onDestroy() {
         mHandle.removeCallbacksAndMessages(null)
         mBluetoothEngine.stop()
@@ -164,6 +170,7 @@ class BluetoothService : Service() {
                     val lastChar = readMessage[readMessage.length - 1]
                     //lastChar need doing something
                     Log.d(TAG, "result: $readMessage")
+                    logcatCallback.invoke("result: $readMessage")
 
                     if (lastChar == '>') {
                         val ecuDataNew = ObdFactory.getEcuData(ecuData, readMessage)
@@ -179,6 +186,7 @@ class BluetoothService : Service() {
                     // construct a string from the buffer
                     val writeMessage = String(writeBuf)
                     Log.d(TAG, "send: $writeMessage")
+                    logcatCallback.invoke("send: $writeMessage")
                 }
             }
         }

@@ -1,7 +1,6 @@
 package com.example.motoengine
 
 import android.Manifest
-import android.animation.Animator
 import android.animation.AnimatorInflater
 import android.animation.AnimatorSet
 import android.annotation.SuppressLint
@@ -13,7 +12,10 @@ import android.os.Build
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
+import android.text.TextUtils
+import android.text.method.ScrollingMovementMethod
 import android.util.Log
+import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
@@ -22,7 +24,6 @@ import com.example.motoengine.bluetooth.BluetoothEngine
 import com.example.motoengine.bluetooth.BluetoothListActivity
 import com.example.motoengine.bluetooth.BluetoothService
 import com.example.motoengine.databinding.ActivityMainBinding
-import com.example.motoengine.utils.Constant
 import pub.devrel.easypermissions.EasyPermissions
 
 
@@ -37,8 +38,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), EasyPermissions.Permis
     private lateinit var translateAnimation1: AnimatorSet
     private lateinit var translateAnimation2: AnimatorSet
     private lateinit var translateAnimation3: AnimatorSet
+    private lateinit var translateAnimation4: AnimatorSet
 
-    private var isAdd = false;
+    private var isAdd = false
 
     companion object {
         const val TAG = "MainActivity"
@@ -56,6 +58,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), EasyPermissions.Permis
         }
 
     private val mServiceConnection: ServiceConnection = object : ServiceConnection {
+        @SuppressLint("SetTextI18n")
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
             Log.d(TAG, "onServiceConnected: ")
             mBinder = (service as BluetoothService.ServiceBinder).service
@@ -67,12 +70,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), EasyPermissions.Permis
 //                        "Travel distance: ${ecuData.distanceTraveled}\n" +
 //                        "Volt: ${ecuData.controlModuleVolt}\n" +
 //                        "Gear: ${ecuData.currentGear}"
-                mBinding.tvEngineData.text = "Eng. RMP: ${ecuData.engineRmp}"
-
+                addLog("Eng. RMP: ${ecuData.engineRmp}")
             }
 
             mBinder.setOnConnectSuccessListener {
 
+            }
+
+            mBinder.setOnLogcatListener {
+                addLog(it)
             }
         }
 
@@ -93,47 +99,95 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), EasyPermissions.Permis
             BIND_AUTO_CREATE
         )
 
-        translateAnimation1 = AnimatorInflater.loadAnimator(this, R.anim.add_bill_anim) as AnimatorSet
-        translateAnimation2 = AnimatorInflater.loadAnimator(this, R.anim.add_bill_anim) as AnimatorSet
-        translateAnimation3 = AnimatorInflater.loadAnimator(this, R.anim.add_bill_anim) as AnimatorSet
+        mBinding.tvEngineData.movementMethod = ScrollingMovementMethod()
+
+        translateAnimation1 =
+            AnimatorInflater.loadAnimator(this, R.anim.add_bill_anim) as AnimatorSet
+        translateAnimation2 =
+            AnimatorInflater.loadAnimator(this, R.anim.add_bill_anim) as AnimatorSet
+        translateAnimation3 =
+            AnimatorInflater.loadAnimator(this, R.anim.add_bill_anim) as AnimatorSet
+        translateAnimation4 =
+            AnimatorInflater.loadAnimator(this, R.anim.add_bill_anim) as AnimatorSet
 
     }
 
     override fun initListeners() {
-        mBinding.btnConnect.setOnClickListener {
+        mBinding.floatingBtnConnect.setOnClickListener {
             checkPermissions()
         }
 
-        mBinding.btnEngine.setOnClickListener {
+        mBinding.floatingBtnCar.setOnClickListener {
             if (mBinder.mBluetoothEngine.state == BluetoothEngine.STATE_CONNECTED)
                 startActivity(Intent(this, MotoActivity::class.java))
         }
 
-        mBinding.btnSetting.setOnClickListener {
+        mBinding.floatingBtnSet.setOnClickListener {
             startActivity(Intent(this, SettingActivity::class.java))
         }
 
         mBinding.floatingBtnMain.setOnClickListener {
             isAdd = isAdd.not()
+            mBinding.floatingBtnMain.setImageResource(if (isAdd) R.drawable.icon_more_1 else R.drawable.icon_more)
             mBinding.floatingBtnSend.isVisible = isAdd
-            mBinding.floatingBtn2.isVisible = isAdd
-            mBinding.floatingBtn3.isVisible = isAdd
+            mBinding.floatingBtnCar.isVisible = isAdd
+            mBinding.floatingBtnConnect.isVisible = isAdd
+            mBinding.floatingBtnSet.isVisible = isAdd
             if (isAdd) {
-                translateAnimation1.setTarget(mBinding.floatingBtnSend)
-                translateAnimation1.startDelay = 150
+                translateAnimation1.setTarget(mBinding.floatingBtnSet)
+                translateAnimation1.startDelay = 100
                 translateAnimation1.start()
-                translateAnimation2.setTarget(mBinding.floatingBtn2)
-                translateAnimation2.startDelay = 200
+                translateAnimation2.setTarget(mBinding.floatingBtnConnect)
+                translateAnimation2.startDelay = 150
                 translateAnimation2.start()
-                translateAnimation3.setTarget(mBinding.floatingBtn3)
-                translateAnimation3.startDelay = 250
+                translateAnimation3.setTarget(mBinding.floatingBtnCar)
+                translateAnimation3.startDelay = 200
                 translateAnimation3.start()
+                translateAnimation4.setTarget(mBinding.floatingBtnSend)
+                translateAnimation4.startDelay = 250
+                translateAnimation4.start()
             }
+        }
+
+        mBinding.floatingBtnSend.setOnClickListener {
+            if (mBinder.mBluetoothEngine.state == BluetoothEngine.STATE_CONNECTED) {
+                mBinder.mBluetoothEngine.write("010C\r".toByteArray())
+            }
+        }
+
+        mBinding.btnClear.setOnClickListener {
+            mBinding.tvEngineData.text = ""
         }
     }
 
     override fun initData() {
 
+    }
+
+    fun addLog(log: String) {
+        if (!TextUtils.isEmpty(log)){
+            var msgInfo = log
+            msgInfo += "\r\n"
+
+            if (mBinding.tvEngineData.text.length > 1024 * 10){
+                mBinding.tvEngineData.text = msgInfo
+                mBinding.tvEngineData.scrollTo(0, 0)
+            }
+            else{
+                mBinding.tvEngineData.append(msgInfo)
+                val offset = getTextViewContentHeight(mBinding.tvEngineData)
+                if (offset > mBinding.tvEngineData.height) {
+                    mBinding.tvEngineData.scrollTo(0, offset - mBinding.tvEngineData.height)
+                }
+            }
+        }
+    }
+
+    private fun getTextViewContentHeight(textView: TextView): Int {
+        val layout = textView.layout
+        val desired = layout.getLineTop(textView.lineCount)
+        val padding = textView.compoundPaddingTop + textView.compoundPaddingBottom
+        return desired + padding
     }
 
     private fun checkPermissions() {

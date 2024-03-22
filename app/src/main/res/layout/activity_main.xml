@@ -12,39 +12,26 @@
         android:layout_height="match_parent"
         android:padding="16dp">
 
-        <Button
-            android:id="@+id/btn_connect"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Connect"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/btn_engine"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Car"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_connect" />
-
-        <Button
-            android:id="@+id/btn_setting"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Setting"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_engine" />
-
         <TextView
             android:id="@+id/tv_engine_data"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="26sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:textSize="16sp"
+            android:scrollbars="vertical"
+            android:fadeScrollbars="true"
+            android:fadingEdge="vertical"
+            android:scrollbarStyle="insideOverlay"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+        
+        <Button
+            android:id="@+id/btn_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Clear"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/floatingBtnMain"
@@ -57,42 +44,61 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:maxImageSize="32dp" />
 
+        <ImageView
+            android:id="@+id/floatingBtnSend"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:background="@drawable/shape_c24_2196f3"
+            android:elevation="5dp"
+            android:padding="14dp"
+            android:src="@drawable/icon_send"
+            android:visibility="gone"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintStart_toStartOf="@id/floatingBtnMain"
+            app:layout_constraintBottom_toTopOf="@+id/floatingBtnCar"
+            app:layout_constraintEnd_toEndOf="@+id/floatingBtnMain"/>
 
+        <ImageView
+            android:id="@+id/floatingBtnConnect"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:background="@drawable/shape_c24_2196f3"
+            android:elevation="5dp"
+            android:padding="16dp"
+            android:src="@drawable/icon_connect"
+            android:layout_marginBottom="18dp"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@id/floatingBtnMain"
+            app:layout_constraintBottom_toTopOf="@+id/floatingBtnSet"
+            app:layout_constraintEnd_toEndOf="@+id/floatingBtnMain"/>
 
-            <ImageView
-                android:id="@+id/floatingBtnSend"
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="16dp"
-                android:background="@drawable/shape_c24_2196f3"
-                android:elevation="5dp"
-                android:visibility="gone"
-                app:layout_constraintTop_toTopOf="@+id/floatingBtn2"
-                app:layout_constraintEnd_toStartOf="@+id/floatingBtn2" />
+        <ImageView
+            android:id="@+id/floatingBtnSet"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/shape_c24_2196f3"
+            android:elevation="5dp"
+            android:padding="16dp"
+            android:src="@drawable/icon_set"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@id/floatingBtnMain"
+            app:layout_constraintBottom_toTopOf="@+id/floatingBtnMain"
+            app:layout_constraintEnd_toEndOf="@+id/floatingBtnMain" />
 
-            <ImageView
-                android:id="@+id/floatingBtn2"
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:background="@drawable/shape_c24_2196f3"
-                android:scaleType="fitCenter"
-                android:elevation="5dp"
-                android:visibility="gone"
-                android:layout_marginBottom="32dp"
-                app:layout_constraintBottom_toTopOf="@+id/floatingBtnMain"
-                app:layout_constraintEnd_toEndOf="@+id/floatingBtnMain"/>
-
-            <ImageView
-                android:id="@+id/floatingBtn3"
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:background="@drawable/shape_c24_2196f3"
-                android:elevation="5dp"
-                android:visibility="gone"
-                android:layout_marginEnd="32dp"
-                app:layout_constraintEnd_toStartOf="@+id/floatingBtnMain"
-                app:layout_constraintBottom_toBottomOf="@+id/floatingBtnMain"/>
+        <ImageView
+            android:id="@+id/floatingBtnCar"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:background="@drawable/shape_c24_2196f3"
+            android:elevation="5dp"
+            android:padding="12dp"
+            android:src="@drawable/icon_car"
+            android:visibility="gone"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintStart_toStartOf="@id/floatingBtnMain"
+            app:layout_constraintBottom_toTopOf="@+id/floatingBtnConnect"
+            app:layout_constraintEnd_toEndOf="@+id/floatingBtnMain" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
