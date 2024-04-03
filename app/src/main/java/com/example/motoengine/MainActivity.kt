@@ -63,13 +63,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), EasyPermissions.Permis
             Log.d(TAG, "onServiceConnected: ")
             mBinder = (service as BluetoothService.ServiceBinder).service
             mBinder.setOnEcuDataChangeListener { ecuData ->
-//                mBinding.tvEngineData.text = "Speed: ${ecuData.vehicleSpeed}\n" +
-//                        "Eng. RMP: ${ecuData.engineRmp}\n" +
-//                        "Temp: ${ecuData.coolantTemp}\n" +
-//                        "Fuel last: ${ecuData.fuelTankLevel}\n" +
-//                        "Travel distance: ${ecuData.distanceTraveled}\n" +
-//                        "Volt: ${ecuData.controlModuleVolt}\n" +
-//                        "Gear: ${ecuData.currentGear}"
                 addLog("Eng. RMP: ${ecuData.engineRmp}")
             }
 
@@ -150,7 +143,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), EasyPermissions.Permis
 
         mBinding.floatingBtnSend.setOnClickListener {
             if (mBinder.mBluetoothEngine.state == BluetoothEngine.STATE_CONNECTED) {
-                val strCMD = "010C" + '\r'
+                var strCMD = "010C"
+                strCMD += '\r'
                 mBinder.mBluetoothEngine.write(strCMD.toByteArray())
             }
         }
