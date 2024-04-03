@@ -173,6 +173,7 @@ class BluetoothService : Service() {
                     logcatCallback.invoke("result: $readMessage")
 
                     if (lastChar == '>') {
+                        logcatCallback.invoke("After '>' result: $readMessage")
                         val ecuDataNew = ObdFactory.getEcuData(ecuData, readMessage)
                         ecuDataCallback.invoke(ecuDataNew)
                         val delayed = SPUtils.getInstance().getInt("SP_BT_SEND_DELAYED", 500).toLong()

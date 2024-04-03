@@ -118,8 +118,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), EasyPermissions.Permis
         }
 
         mBinding.floatingBtnCar.setOnClickListener {
-            if (mBinder.mBluetoothEngine.state == BluetoothEngine.STATE_CONNECTED)
-                startActivity(Intent(this, MotoActivity::class.java))
+            startActivity(Intent(this, MotoActivity::class.java))
         }
 
         mBinding.floatingBtnSet.setOnClickListener {
@@ -151,7 +150,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), EasyPermissions.Permis
 
         mBinding.floatingBtnSend.setOnClickListener {
             if (mBinder.mBluetoothEngine.state == BluetoothEngine.STATE_CONNECTED) {
-                mBinder.mBluetoothEngine.write("010C\r".toByteArray())
+                val strCMD = "010C" + '\r'
+                mBinder.mBluetoothEngine.write(strCMD.toByteArray())
             }
         }
 
@@ -213,15 +213,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), EasyPermissions.Permis
             mBinder.mBluetoothEngine.start()
         }
         intentActivityResult.launch(Intent(this, BluetoothListActivity::class.java))
-    }
-
-    private fun cleanResponse(text: String): String {
-        var text = text
-        text = text.trim { it <= ' ' }
-        text = text.replace("\t", "")
-        text = text.replace(" ", "")
-        text = text.replace(">", "")
-        return text
     }
 
     override fun onDestroy() {

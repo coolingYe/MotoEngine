@@ -253,11 +253,11 @@ object ObdFactory {
     }
 
     fun cleanResponse(text: String): String {
-        var text = text
-        text = text.trim { it <= ' ' }
-        text = text.replace("\t", "")
-        text = text.replace(" ", "")
-        text = text.replace(">", "")
-        return text
+        var target = text
+        target = target.trim()
+        target = target.replace("\t", "")
+        target = target.replace(" ", "")
+        target = target.replace(">", "")
+        return target
     }
 }
